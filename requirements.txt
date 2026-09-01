@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+pydantic
+optimum[onnxruntime]
+transformers
+numpy
+python-multipart

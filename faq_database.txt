@@ -1,0 +1,179 @@
+Q: What is myFinergy?
+A: myFinergy is a sales-technology platform designed for financial advisors to help them move from product-based selling to goal-based financial planning.
+
+Q: Who can use myFinergy?
+A: Insurance advisors, mutual fund distributors, financial advisors, wealth advisors and other professionals who help clients plan their financial goals can use myFinergy.
+
+Q: What problem does myFinergy solve?
+A: It helps advisors identify qualified prospects, start meaningful financial conversations, conduct financial diagnostics, identify financial gaps, present goals visually, generate financial opportunities, follow up systematically, and improve client engagement and conversion.
+
+Q: Is myFinergy an insurance-selling app?
+A: No. myFinergy is designed around financial goals and client needs, rather than starting with a particular financial product.
+
+Q: Why should I use a goal-based approach?
+A: Clients generally buy more confidently when they understand what financial problem they are solving rather than simply being presented with a product.
+
+Q: Do I need to be a financial planning expert to use myFinergy?
+A: No. myFinergy simplifies much of the financial assessment and presentation process so advisors can conduct structured conversations.
+
+Q: How do I log in?
+A: Use your registered mobile number/credentials and follow the login process provided by myFinergy.
+
+Q: What should I do if I forget my password?
+A: Use the password recovery/reset option available on the login screen.
+
+Q: What should I do if I don't receive the OTP?
+A: Check your mobile network and verify that the registered mobile number is correct. If the OTP still doesn't arrive, contact support.
+
+Q: Can I use myFinergy for multiple clients?
+A: Yes. The CRM is designed to manage multiple prospects and clients.
+
+Q: Where do I find my prospects?
+A: Go to CRM → Leads.
+
+Q: How do I add a new prospect?
+A: Add the prospect through the CRM/client onboarding process and enter the available basic information.
+
+Q: What information should I collect initially?
+A: Start with basic information such as Name, Mobile number, Age, Occupation, Income/salary, Family information, Existing financial commitments, and Financial goals.
+
+Q: Do I need complete client information before starting?
+A: Not necessarily. You can begin with basic information and progressively complete the client's profile.
+
+Q: Why is monthly income important?
+A: Income helps establish the client's financial capacity and provides context for goals, savings, protection and investment requirements.
+
+Q: What is the best way to introduce myFinergy to a prospect?
+A: Don't begin by saying, "I want to sell you insurance/investments." Instead, position the conversation around: "Let's check your financial fitness and see whether your current financial plan is strong enough to achieve your important goals."
+
+Q: What if the prospect says, "I already have an advisor"?
+A: Use myFinergy as a second-opinion financial fitness assessment, rather than attacking the existing advisor.
+
+Q: What if the prospect says, "I don't need financial planning"?
+A: Explain that the purpose is to check whether their existing financial arrangements are aligned with their future goals.
+
+Q: What if the prospect says, "I don't have time"?
+A: Offer a short initial diagnostic conversation and explain that the platform is designed to simplify the process.
+
+Q: What if the prospect says, "Send me the details on WhatsApp"?
+A: Use the appropriate myFinergy presentation/report/link to continue the conversation digitally.
+
+Q: What is a financial diagnostic?
+A: It is an assessment designed to identify how financially prepared a client is for their important future goals and financial risks.
+
+Q: What is FinFit?
+A: FinFit represents the client's financial fitness/readiness based on the information and goals captured in myFinergy.
+
+Q: What is the Finergy Score?
+A: The Finergy Score is a simplified indicator that helps communicate the client's financial readiness/strength.
+
+Q: Why should I show a score to the client?
+A: A score makes a complex financial situation easier to understand and gives the advisor a natural starting point for discussion.
+
+Q: What should I do if the client's score is low?
+A: Don't immediately sell a product. First identify why the score is low, which financial gap is responsible, which goal is affected, and what action can improve the situation.
+
+Q: What is the FinFit presentation?
+A: It is a client-facing financial fitness presentation that helps the advisor explain the client's financial position and goals visually.
+
+Q: How do I generate the FinFit presentation?
+A: The typical workflow is: CRM → Leads → View Details → Edit/update information → Goals → Add Goals → FinFit Presentation → Share/Send PPT.
+
+Q: Why should I share the FinFit presentation before selling?
+A: Because the presentation creates financial awareness and problem recognition before the advisor recommends solutions.
+
+Q: Why are goals important in myFinergy?
+A: Goals transform an abstract financial conversation into a specific financial requirement.
+
+Q: What types of goals can I add?
+A: Examples include Children's education, Children's marriage, Home purchase, Vehicle purchase, Retirement, Wealth creation, Emergency fund, Travel, Business, and other major financial aspirations.
+
+Q: What is "Treatment" in myFinergy?
+A: Treatment should be viewed as the recommended action plan for addressing an identified financial gap.
+
+Q: What is the difference between Diagnosis and Treatment?
+A: Diagnosis answers "What is the financial problem?" while Treatment answers "What should the client do about it?"
+
+Q: Should treatment always mean selling a product?
+A: No. Treatment should first address the client's financial need. A financial product may be one component of the solution.
+
+Q: How do I identify an opportunity?
+A: Look for gaps created by Income risk, Protection requirements, Health-cost exposure, Retirement requirements, Education goals, Existing liabilities, Investment requirements, or Goal funding shortages.
+
+Q: What is the Revenue section?
+A: The Revenue section helps the advisor understand potential business opportunities emerging from identified client needs.
+
+Q: How do I avoid appearing sales-focused?
+A: Lead with: Goal → Gap → Impact → Recommendation → Action, rather than Product → Features → Premium → Closing.
+
+Q: What should I say when starting the FinFit conversation?
+A: A simple opening: "Before we discuss any financial product, let's first understand whether your current financial plan is strong enough to achieve the goals you've set for yourself."
+
+Q: What should I ask after showing the score?
+A: Ask: "Were you expecting this score?" This creates a natural conversation.
+
+Q: What if the client becomes worried after seeing a low score?
+A: Reassure them: "The purpose of this assessment isn't to worry you. It is to identify the areas we can improve before they become bigger problems."
+
+Q: What should I do after sharing the FinFit report?
+A: Follow the CRM's recommended next action and continue the conversation based on the client's response.
+
+Q: What should I send as a follow-up?
+A: Examples include Financial awareness content, Wisdom shots, Short educational videos/reels, Client testimonials, Community invitations, Financial insights, and Relevant diagnostic information.
+
+Q: Can I share myFinergy content through WhatsApp?
+A: Yes, wherever WhatsApp sharing is enabled.
+
+Q2: What is the Financial Test?
+A: The test helps collect information required to understand the client's financial position and readiness.
+
+Q: What is the recommended myFinergy workflow?
+A: Lead → Connect → Educate → Test → Diagnose → Present → Identify Gap → Treat → Follow-up → Track.
+
+Q: What does T1 mean?
+A: T1 – Teach: Educate the prospect and create financial awareness.
+
+Q: What does T2 mean?
+A: T2 – Test: Conduct the financial assessment.
+
+Q: What does T3 mean?
+A: T3 – Treat: Identify the gap and recommend appropriate action.
+
+Q: What does T4 mean?
+A: T4 – Track: Continue monitoring, follow-up and client engagement.
+
+Q: How can myFinergy save an advisor's time?
+A: It can reduce manual calculations, simplify presentation creation and provide structured workflows.
+
+Q: Does myFinergy guarantee sales?
+A: No. It is a sales-enablement and financial-planning technology platform. Results depend on advisor execution, client quality, communication and follow-up.
+
+Q: How can myFinergy help me become a premium advisor?
+A: By changing the advisor's positioning from "I sell financial products" to "I help clients identify and solve financial gaps."
+
+Q: What is the biggest mistake advisors make?
+A: Starting with the product instead of the client's financial problem.
+
+Q: The app isn't loading. What should I do?
+A: Check Internet connection, App/browser status, Login status, App version, and try again after restarting the app. If the issue continues, contact support.
+
+Q: A button isn't working. What should I do?
+A: Capture a screenshot, note the action you were trying to perform and contact support.
+
+: My client isn't receiving the WhatsApp message. What should I check?
+A: Verify correct mobile number, WhatsApp availability, Internet connectivity, Message/share permissions, and whether the client has blocked the number.
+
+Q: Client says: "I already have investments."
+A: Response: "That's good. Let's check whether your existing investments are aligned with all your important future goals."
+
+Q: Client says: "I already have insurance."
+A: Response: "That's a good starting point. Let's check whether the existing protection is still adequate for your current income, liabilities and family's future needs."
+
+Q: Client says: "I don't want to share my financial details."
+A: Response: "That's completely understandable. We only need the information required for the assessment, and you can decide what you're comfortable discussing."
+
+Q: Client says: "I'll think about it."
+A: Response: "Absolutely. Before you decide, let's make sure you clearly understand the financial gap and the options available to address it."
+
+Q: What is the right way to use myFinergy?
+A: Don't use myFinergy as a product-selling tool. Use it as a Financial Advisor Conversation Engine following the path: ATTRACT → TEACH → TEST → DIAGNOSE → PRESENT → TREAT → TRACK → GROW.

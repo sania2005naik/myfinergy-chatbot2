@@ -1,0 +1,25 @@
+Timestamp,Question,ClosestMatch,Score
+2026-08-23 12:08:33,yes,Does myFinergy guarantee sales?,0.165
+2026-08-23 12:13:16,what is the capital of France,Why is monthly income important?,0.091
+2026-08-23 12:21:59,best pizza toppings,Who can use myFinergy?,0.141
+2026-08-23 12:22:08,what's the workflow from lead to close,What is the recommended myFinergy workflow?,0.261
+2026-08-23 12:38:14,what kinds of financial goals can be tracked in the app,How do I use myFinergy for family financial planning?,0.485
+2026-08-23 12:38:30,should I push a product right after a low score,Should I focus only on the score?,0.542
+2026-08-23 12:38:37,how do I get a client to refer their friends,How do I ask for a referral?,0.532
+2026-08-23 12:39:20,how do I reset my password,How do I send the test link?,0.195
+2026-08-23 12:39:26,what happens if my subscription expires,What if the client doesn't respond?,0.313
+2026-08-23 12:39:35,"he app keeps crashing, what do I do",My client isn't receiving the WhatsApp message. What should I check?,0.337
+2026-08-23 12:39:44,what's a good recipe for banana bread,How do I pitch myFinergy to a prospect?,0.186
+2026-08-23 12:58:01,My client says they don't have time to meet.,Can I use myFinergy during a client meeting?,0.484
+2026-08-23 12:58:28,What is the stock price of Apple?,see prospect details,0.242
+2026-08-23 12:58:38,help,how to start,0.364
+2026-08-23 13:01:41,My client says they don't have time to meet.,Can I use myFinergy during a client meeting?,0.484
+2026-08-23 13:07:02,hot to,Can you walk me through T1 to T4?,0.230
+2026-08-23 13:08:41,login,how to start,0.330
+2026-08-23 13:16:57,what kinds of financial goals can be tracked in the app,How do I use myFinergy for family financial planning?,0.485
+2026-08-23 13:17:15,should I push a product right after a low score,Should I focus only on the score?,0.542
+2026-08-23 13:17:23,how do I get a client to refer their friends,My client says they don't have time to meet,0.534
+2026-08-23 13:17:30,what's the best approach for a young professional client,What's a good way to bring up myFinergy with a new client?,0.644
+2026-08-23 13:17:38,how should I handle a retirement planning conversation,How do I use it for retirement planning?,0.604
+2026-08-23 13:18:29,what's a good recipe for banana bread,How do I pitch myFinergy to a prospect?,0.186
+2026-08-31 18:41:19,bye,plan expired,0.243

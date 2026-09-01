@@ -1,0 +1,230 @@
+{
+  "version": "2.0",
+  "last_updated": "2024-08-26",
+  "database_stats": {
+    "total_faqs": 150,
+    "total_categories": 25,
+    "total_alternative_questions": 450,
+    "average_alternatives_per_faq": 3,
+    "database_size_kb": 250
+  },
+  "categories": [
+    {
+      "id": 1,
+      "name": "Getting Started",
+      "faq_count": 8,
+      "description": "Introductory information about myFinergy"
+    },
+    {
+      "id": 2,
+      "name": "Account & Login",
+      "faq_count": 6,
+      "description": "Login, authentication, and account access"
+    },
+    {
+      "id": 3,
+      "name": "CRM & Leads",
+      "faq_count": 9,
+      "description": "Client relationship management and lead handling"
+    },
+    {
+      "id": 4,
+      "name": "Client Onboarding",
+      "faq_count": 5,
+      "description": "Initial client introduction and objection handling"
+    },
+    {
+      "id": 5,
+      "name": "Financial Diagnostic",
+      "faq_count": 10,
+      "description": "FinFit assessment and scoring"
+    },
+    {
+      "id": 6,
+      "name": "FinFit Presentation",
+      "faq_count": 7,
+      "description": "Generating and sharing presentation"
+    },
+    {
+      "id": 7,
+      "name": "Goals",
+      "faq_count": 6,
+      "description": "Goal management and importance"
+    },
+    {
+      "id": 8,
+      "name": "Treatment",
+      "faq_count": 6,
+      "description": "Treatment planning and opportunity identification"
+    },
+    {
+      "id": 9,
+      "name": "Revenue",
+      "faq_count": 5,
+      "description": "Revenue opportunities and multiple sales"
+    },
+    {
+      "id": 10,
+      "name": "Conversation",
+      "faq_count": 6,
+      "description": "Conversation starters and client communication"
+    },
+    {
+      "id": 11,
+      "name": "Follow-Up",
+      "faq_count": 5,
+      "description": "Follow-up strategies and workflows"
+    },
+    {
+      "id": 12,
+      "name": "WhatsApp",
+      "faq_count": 4,
+      "description": "WhatsApp sharing and digital distribution"
+    },
+    {
+      "id": 13,
+      "name": "Test",
+      "faq_count": 6,
+      "description": "Financial assessment and test management"
+    },
+    {
+      "id": 14,
+      "name": "Workflow",
+      "faq_count": 6,
+      "description": "Advisory workflow and T1-T4 framework"
+    },
+    {
+      "id": 15,
+      "name": "Productivity",
+      "faq_count": 6,
+      "description": "Time saving and efficiency tips"
+    },
+    {
+      "id": 16,
+      "name": "Conversion",
+      "faq_count": 8,
+      "description": "Sales conversion and revenue improvement"
+    },
+    {
+      "id": 17,
+      "name": "Premium Advisor",
+      "faq_count": 6,
+      "description": "Premium advisory positioning and strategies"
+    },
+    {
+      "id": 18,
+      "name": "Mistakes",
+      "faq_count": 7,
+      "description": "Common mistakes to avoid"
+    },
+    {
+      "id": 19,
+      "name": "Technical",
+      "faq_count": 5,
+      "description": "Technical issues and data management"
+    },
+    {
+      "id": 20,
+      "name": "Subscription",
+      "faq_count": 5,
+      "description": "Subscription plans and renewals"
+    },
+    {
+      "id": 21,
+      "name": "Troubleshooting",
+      "faq_count": 5,
+      "description": "Problem solving and support"
+    },
+    {
+      "id": 22,
+      "name": "Strategy",
+      "faq_count": 7,
+      "description": "Business strategy and tactics"
+    },
+    {
+      "id": 23,
+      "name": "Objections",
+      "faq_count": 5,
+      "description": "Handling client objections"
+    },
+    {
+      "id": 24,
+      "name": "Advanced",
+      "faq_count": 5,
+      "description": "Advanced use cases and segmentation"
+    },
+    {
+      "id": 25,
+      "name": "Most Important",
+      "faq_count": 2,
+      "description": "Core philosophy and best practices"
+    }
+  ],
+  "search_keywords": {
+    "t1t4_framework": ["teach", "test", "treat", "track", "workflow", "process"],
+    "goals": ["goal", "goals", "objectives", "targets", "aspirations"],
+    "sales": ["sell", "selling", "sales", "conversion", "close", "pitch"],
+    "client": ["client", "prospect", "customer", "advisor"],
+    "presentation": ["presentation", "finfit", "report", "ppt", "share"],
+    "objections": ["objection", "already have", "no time", "not interested"],
+    "whatsapp": ["whatsapp", "digital", "share", "message", "sms"],
+    "follow_up": ["follow", "follow-up", "engagement", "retention"],
+    "premium": ["premium", "high value", "elite", "exclusive"]
+  },
+  "most_searched_faqs": [
+    "qa_001",
+    "qa_025",
+    "qa_030",
+    "qa_031",
+    "qa_038",
+    "qa_083",
+    "qa_084",
+    "qa_085",
+    "qa_086",
+    "qa_095"
+  ],
+  "algorithm_settings": {
+    "similarity_threshold": 0.4,
+    "search_timeout_ms": 100,
+    "min_word_length": 2,
+    "case_sensitive": false,
+    "partial_matching": true,
+    "alternative_question_weight": 1.0,
+    "main_question_weight": 1.5
+  },
+  "ui_components": {
+    "sidebar_buttons": 14,
+    "chat_interface": true,
+    "t1t4_cards": 4,
+    "feedback_system": true,
+    "reset_button": true,
+    "send_button": true
+  },
+  "last_maintenance": "2024-08-26",
+  "next_maintenance": "2024-09-26",
+  "bugs_fixed": [
+    {
+      "bug_id": "BUG_001",
+      "description": "Duplicate T1-T4 button in Quick Access",
+      "status": "FIXED",
+      "date_fixed": "2024-08-26"
+    },
+    {
+      "bug_id": "BUG_002",
+      "description": "Handle Objections button not working (escaped quotes)",
+      "status": "FIXED",
+      "date_fixed": "2024-08-26"
+    }
+  ],
+  "testing_summary": {
+    "total_tests": 199,
+    "passed_tests": 199,
+    "failed_tests": 0,
+    "success_rate": 100,
+    "button_tests": 14,
+    "search_tests": 20,
+    "ui_tests": 15,
+    "database_tests": 150,
+    "performance_tests": 10
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "version": "1.0",
+  "last_updated": "2024-08-26",
+  "tips": [
+    {
+      "id": "tip_001",
+      "category": "Sales Tips",
+      "tip": "Start with goals, not products. This creates genuine client interest and higher conversion rates.",
+      "tags": ["selling", "strategy", "best practice"]
+    },
+    {
+      "id": "tip_002",
+      "category": "Sales Tips",
+      "tip": "Let the financial diagnostic do the selling for you. Present the gap, not the product.",
+      "tags": ["selling", "diagnostic", "approach"]
+    },
+    {
+      "id": "tip_003",
+      "category": "Client Communication",
+      "tip": "Education before selling improves trust and conversion. Share financial awareness content first.",
+      "tags": ["education", "trust", "selling"]
+    },
+    {
+      "id": "tip_004",
+      "category": "Follow-up",
+      "tip": "Consistent follow-up converts awareness into conversations. Don't let prospects go cold.",
+      "tags": ["follow-up", "persistence", "engagement"]
+    },
+    {
+      "id": "tip_005",
+      "category": "Objection Handling",
+      "tip": "When hearing objections, position myFinergy as a second opinion or health check, not a sales pitch.",
+      "tags": ["objections", "positioning", "response"]
+    },
+    {
+      "id": "tip_006",
+      "category": "Goal Setting",
+      "tip": "Most clients have 3-5 major goals. Capture all of them to identify multiple opportunities.",
+      "tags": ["goals", "opportunities", "planning"]
+    },
+    {
+      "id": "tip_007",
+      "category": "Premium Advisor",
+      "tip": "Premium advisors focus on comprehensive financial health checks, not individual products.",
+      "tags": ["premium", "positioning", "strategy"]
+    },
+    {
+      "id": "tip_008",
+      "category": "Time Management",
+      "tip": "Use myFinergy during meetings to save time on manual calculations and presentation creation.",
+      "tags": ["productivity", "efficiency", "time"]
+    },
+    {
+      "id": "tip_009",
+      "category": "Client Engagement",
+      "tip": "Share wisdom content every 3-5 days to maintain prospect engagement and build relationships.",
+      "tags": ["engagement", "follow-up", "content"]
+    },
+    {
+      "id": "tip_010",
+      "category": "Referral Strategy",
+      "tip": "Ask for referrals after delivering value: Who else would benefit from a financial fitness assessment?",
+      "tags": ["referrals", "growth", "networking"]
+    },
+    {
+      "id": "tip_011",
+      "category": "Mindset",
+      "tip": "Think like a financial advisor, not a product seller. Help clients solve problems, not just buy things.",
+      "tags": ["mindset", "philosophy", "approach"]
+    },
+    {
+      "id": "tip_012",
+      "category": "WhatsApp Strategy",
+      "tip": "Use WhatsApp to share presentations, but establish context first. Don't cold-send.",
+      "tags": ["whatsapp", "digital", "communication"]
+    },
+    {
+      "id": "tip_013",
+      "category": "Score Discussion",
+      "tip": "After showing a low score, focus on one actionable gap: 'This is solvable. Let's fix this first.'",
+      "tags": ["score", "messaging", "psychology"]
+    },
+    {
+      "id": "tip_014",
+      "category": "Multiple Opportunities",
+      "tip": "Frame multiple gaps positively: 'You have 4 goals. We'll address the most urgent one first, then others.'",
+      "tags": ["opportunities", "framing", "psychology"]
+    },
+    {
+      "id": "tip_015",
+      "category": "New Advisors",
+      "tip": "myFinergy helps new advisors follow a structured process without relying on years of experience.",
+      "tags": ["new advisor", "structured process", "support"]
+    },
+    {
+      "id": "tip_016",
+      "category": "Experienced Advisors",
+      "tip": "Use myFinergy to standardize your process and identify additional opportunities you might miss.",
+      "tags": ["experienced", "standardization", "efficiency"]
+    },
+    {
+      "id": "tip_017",
+      "category": "Conversion Rates",
+      "tip": "Advisors using FinFit typically see 40-50% conversion vs 20-30% without. Follow-up quality matters.",
+      "tags": ["conversion", "metrics", "results"]
+    },
+    {
+      "id": "tip_018",
+      "category": "Time Savings",
+      "tip": "Save 1-2 hours per client by eliminating manual calculations and presentation creation.",
+      "tags": ["time", "productivity", "efficiency"]
+    },
+    {
+      "id": "tip_019",
+      "category": "Segmentation",
+      "tip": "Use different approaches for young professionals, parents, and mature clients. Customize your conversation.",
+      "tags": ["segmentation", "strategy", "customization"]
+    },
+    {
+      "id": "tip_020",
+      "category": "Relationship Building",
+      "tip": "Build relationships through value delivery, not pushing products. This creates sustainable business.",
+      "tags": ["relationships", "value", "philosophy"]
+    }
+  ]
+}
