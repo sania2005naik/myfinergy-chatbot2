@@ -5,3 +5,4 @@ optimum[onnxruntime]
 transformers
 numpy
 python-multipart
+sentence-transformers
