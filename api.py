@@ -16,6 +16,7 @@ os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import torch
 torch.set_num_threads(1)
@@ -71,22 +72,13 @@ class FeedbackRequest(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Global State & Lazy Model Loader
+# Global State
 # ---------------------------------------------------------------------------
 _qa_pairs: list[dict] = []
 _qa_embeddings: np.ndarray | None = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
 _hf_model: SentenceTransformer | None = None
-
-
-def get_model() -> SentenceTransformer:
-    """Lazy initialization: Loads model weights on-demand to save startup memory."""
-    global _hf_model
-    if _hf_model is None:
-        print("Lazy loading SentenceTransformer model on CPU...")
-        _hf_model = SentenceTransformer(MODEL_NAME, device="cpu")
-    return _hf_model
 
 
 def _normalize(text: str) -> str:
@@ -115,12 +107,12 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
-    """Generates embeddings locally using SentenceTransformer and L2-normalizes them."""
-    model = get_model()
+    """Generates embeddings using pre-loaded SentenceTransformer and L2-normalizes them."""
+    global _hf_model
     normalized_texts = [_normalize(t) for t in texts]
     
     with torch.no_grad():
-        embeddings = model.encode(normalized_texts, convert_to_numpy=True, show_progress_bar=False)
+        embeddings = _hf_model.encode(normalized_texts, convert_to_numpy=True, show_progress_bar=False)
 
     if len(embeddings.shape) == 1:
         embeddings = np.expand_dims(embeddings, axis=0)
@@ -131,7 +123,6 @@ def _generate_embeddings(texts: list[str]) -> np.ndarray:
 
 
 def _compute_texts_md5(texts: list[str]) -> str:
-    """Computes a deterministic MD5 hash across text data for cache validation."""
     hasher = hashlib.md5()
     for text in texts:
         hasher.update(text.encode("utf-8"))
@@ -151,11 +142,12 @@ def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
             with open(EMBEDDINGS_CACHE_META_PATH, "r", encoding="utf-8") as f:
                 cached_meta = json.load(f)
             if cached_meta == fingerprint:
-                print("Loaded embeddings from cache.")
+                print("Loaded embeddings from cache successfully.")
                 return np.load(EMBEDDINGS_CACHE_PATH)
-        except Exception:
-            print("Cache validation failed or file corrupted. Rebuilding embeddings...")
+        except Exception as e:
+            print(f"Cache validation error: {e}. Rebuilding...")
 
+    print("Cache missing or invalid. Rebuilding embeddings...")
     embeddings = _generate_embeddings(texts)
 
     np.save(EMBEDDINGS_CACHE_PATH, embeddings)
@@ -168,7 +160,10 @@ def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup Phase
-    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows
+    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows, _hf_model
+
+    print("Initializing SentenceTransformer model...")
+    _hf_model = SentenceTransformer(MODEL_NAME, device="cpu")
 
     _qa_pairs = _load_qa_database()
     _qa_rows = _expand_with_alt_questions(_qa_pairs)
@@ -213,7 +208,7 @@ def _log_unanswered(question: str, best_match: str, score: float):
 def find_answer(user_question: str) -> dict:
     normalized = _normalize(user_question)
 
-    # 1. Exact Match Check (Fastest & Lightest)
+    # 1. Exact Match Check
     exact = _exact_match_index.get(normalized)
     if exact:
         return {
@@ -247,7 +242,7 @@ def find_answer(user_question: str) -> dict:
             "match_type": "semantic" if best_score >= LOW_CONFIDENCE_THRESHOLD else "semantic_low_confidence",
         }
 
-    # 4. Fallback Handling & Logging
+    # 4. Fallback Handling
     _log_unanswered(user_question, best_phrasing, best_score)
     return {
         "answer": FALLBACK_ANSWER,
