@@ -7,6 +7,19 @@ from datetime import datetime
 from contextlib import asynccontextmanager
 
 import numpy as np
+
+# ---------------------------------------------------------------------------
+# 1. Thread & Environment Optimizations (MUST RUN BEFORE TORCH IMPORTS)
+# ---------------------------------------------------------------------------
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
+import torch
+torch.set_num_threads(1)
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -23,7 +36,6 @@ UNANSWERED_LOG_PATH = os.path.join(BASE_DIR, "unanswered_questions_log.csv")
 FEEDBACK_LOG_PATH = os.path.join(BASE_DIR, "feedback_log.csv")
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-hf_model = SentenceTransformer(MODEL_NAME)
 
 SIMILARITY_THRESHOLD = 0.45       
 LOW_CONFIDENCE_THRESHOLD = 0.60   
@@ -59,12 +71,22 @@ class FeedbackRequest(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Knowledge base + embeddings
+# Global State & Lazy Model Loader
 # ---------------------------------------------------------------------------
 _qa_pairs: list[dict] = []
 _qa_embeddings: np.ndarray | None = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
+_hf_model: SentenceTransformer | None = None
+
+
+def get_model() -> SentenceTransformer:
+    """Lazy initialization: Loads model weights on-demand to save startup memory."""
+    global _hf_model
+    if _hf_model is None:
+        print("Lazy loading SentenceTransformer model on CPU...")
+        _hf_model = SentenceTransformer(MODEL_NAME, device="cpu")
+    return _hf_model
 
 
 def _normalize(text: str) -> str:
@@ -94,8 +116,11 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
     """Generates embeddings locally using SentenceTransformer and L2-normalizes them."""
+    model = get_model()
     normalized_texts = [_normalize(t) for t in texts]
-    embeddings = hf_model.encode(normalized_texts, convert_to_numpy=True, show_progress_bar=False)
+    
+    with torch.no_grad():
+        embeddings = model.encode(normalized_texts, convert_to_numpy=True, show_progress_bar=False)
 
     if len(embeddings.shape) == 1:
         embeddings = np.expand_dims(embeddings, axis=0)
@@ -106,7 +131,7 @@ def _generate_embeddings(texts: list[str]) -> np.ndarray:
 
 
 def _compute_texts_md5(texts: list[str]) -> str:
-    """Computes a deterministic MD5 hash across text data for cache validation across restarts."""
+    """Computes a deterministic MD5 hash across text data for cache validation."""
     hasher = hashlib.md5()
     for text in texts:
         hasher.update(text.encode("utf-8"))
@@ -154,10 +179,10 @@ async def lifespan(app: FastAPI):
         _exact_match_index[_normalize(text)] = pair
 
     total_phrasings = len(_qa_rows)
-    print(f"Loaded {len(_qa_pairs)} Q&A pairs ({total_phrasings} phrasings incl. alt_questions) and embeddings ({_qa_embeddings.shape}).")
+    print(f"Loaded {len(_qa_pairs)} Q&A pairs ({total_phrasings} phrasings) and embeddings matrix {_qa_embeddings.shape}.")
     
     yield
-    # Shutdown Phase (Cleanup if needed)
+    # Shutdown Phase
 
 
 app = FastAPI(title="MyFinergy Chatbot API", lifespan=lifespan)
@@ -188,7 +213,7 @@ def _log_unanswered(question: str, best_match: str, score: float):
 def find_answer(user_question: str) -> dict:
     normalized = _normalize(user_question)
 
-    # 1. Exact Match Check (Highest Priority)
+    # 1. Exact Match Check (Fastest & Lightest)
     exact = _exact_match_index.get(normalized)
     if exact:
         return {
@@ -208,7 +233,7 @@ def find_answer(user_question: str) -> dict:
         }
 
     # 3. Vector Semantic Similarity Search
-    query_embedding = _generate_embeddings([user_question])[0]  # Guaranteed L2 normalized
+    query_embedding = _generate_embeddings([user_question])[0]
     scores = _qa_embeddings @ query_embedding
     best_idx = int(np.argmax(scores))
     best_score = float(scores[best_idx])
