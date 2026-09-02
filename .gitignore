@@ -1,7 +1,37 @@
+# Virtual Environments
 .venv/
 .venv-*/
+env/
+venv/
+
+# Python Cache & Artifacts
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# System Files
 .DS_Store
-chroma_db/.env
+Thumbs.db
+
+# Environment & Secrets
 .env
-.env
+.env.*
+!.env.example
+
+# Vector DB & Embeddings Cache
+chroma_db/
+qa_embeddings.npy
+qa_embeddings_meta.json
+
+# Log Files
+*.log
+unanswered_questions_log.csv
+feedback_log.csv
+
+# Frontend (if using Node/Vite/React)
+node_modules/
+dist/
+build/
+.vercel/
