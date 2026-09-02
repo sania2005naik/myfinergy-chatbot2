@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myFinergy AI Copilot</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0e1117;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #0b1329;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #1e293b;
+            overflow-y: auto;
+        }
+
+        .logo-container {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;    
+            text-align: center;
+            gap: 8px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo-text-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .logo-container h1 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .sidebar-subtitle {
+            color: #3b82f6;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .st-btn {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 11px 14px;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+        }
+
+        .st-btn:hover {
+            background-color: #1f2937;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateX(2px);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #1e293b;
+        }
+
+        .reset-btn {
+            background-color: #1e293b;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            padding: 11px 14px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+            min-height: 42px;
+        }
+
+        .reset-btn:hover {
+            background-color: #1f2937;
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #0e1117;
+            position: relative;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 25px 12% 120px 12%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-row.user { justify-content: flex-end; }
+        .message-row.bot { justify-content: flex-start; }
+
+        .bot-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 80%;
+        }
+
+        .user-bubble {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-radius: 18px 18px 4px 18px;
+            padding: 14px 20px;
+            max-width: 80%;
+        }
+
+        .bot-bubble {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 18px 18px 18px 4px;
+            padding: 14px 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .chat-text {
+            font-size: 15px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 2px;
+            margin-left: 4px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background-color: transparent;
+            border: none;
+            color: #64748b;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .action-btn:hover {
+            background-color: #1e293b;
+            color: #cbd5e1;
+        }
+
+        .action-btn.active-like {
+            color: #22c55e;
+            background-color: rgba(34, 197, 94, 0.1);
+        }
+
+        .action-btn.active-dislike {
+            color: #ef4444;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .t1t4-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .t1t4-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .t1t4-card {
+            background-color: #1a202c;
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .t1t4-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b82f6;
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+        }
+
+        .t1t4-card.teach { border-top: 3px solid #8b5cf6; }
+        .t1t4-card.test { border-top: 3px solid #3b82f6; }
+        .t1t4-card.treat { border-top: 3px solid #10b981; }
+        .t1t4-card.track { border-top: 3px solid #f97316; }
+
+        .t1t4-icon { font-size: 28px; margin-bottom: 3px; }
+        .t1t4-title { font-size: 15px; font-weight: 700; margin: 0; }
+        .t1t4-title.teach { color: #8b5cf6; }
+        .t1t4-title.test { color: #3b82f6; }
+        .t1t4-title.treat { color: #10b981; }
+        .t1t4-title.track { color: #f97316; }
+        .t1t4-subtitle { font-size: 12px; font-weight: 600; color: #e2e8f0; margin: 0; }
+        .t1t4-description { font-size: 13px; color: #cbd5e1; line-height: 1.4; flex-grow: 1; margin: 4px 0; }
+
+        .input-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: #0e1117;
+            padding: 15px 15%;
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid #1e293b;
+        }
+
+        #user-input {
+            flex: 1;
+            background-color: #1e293b;
+            color: #ffffff;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 15px;
+            transition: border-color 0.2s ease;
+        }
+
+        #user-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .send-btn {
+            background-color: transparent;
+            border: 1px solid #334155;
+            color: #64748b;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="logo.png" alt="Finergy Logo" class="logo-img" onerror="this.style.display='none'">
+            <div class="logo-text-wrapper">
+                <h1>myFinergy</h1>
+                <span class="sidebar-subtitle">AI Copilot</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <p class="section-title">Quick Access</p>
+            <div class="sidebar-buttons">
+                <button class="st-btn" onclick="handleFaqClick('What is myFinergy?')">📌 Getting Started</button>
+                <button class="st-btn" onclick="handleFaqClick('What is FinFit?')">💹 About FinFit</button>
+                <button class="st-btn" onclick="handleT1T4Framework()">📋 T1-T4 Framework</button>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="reset-btn" onclick="resetChat()">🔄 Reset Chat</button>
+        </div>
+    </div>
+
+    <div class="main-chat">
+        <div class="chat-body" id="chat-body">
+            <div class="message-row bot">
+                <div class="bot-container">
+                    <div class="bot-bubble">
+                        <div class="chat-text">👋 Welcome to myFinergy AI Copilot!
+
+I have 150+ FAQs about myFinergy. You can ask me anything or click the Quick Access buttons.
+
+Try:
+• "hi" or "hello" for a greeting
+• "how to login" for portal credentials
+• Click any button for quick answers</div>
+                    </div>
+                    <div class="message-actions">
+                        <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
+                        <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
+                        <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Ask any question..." onkeydown="if(event.key==='Enter') processUserQuery()">
+            <button class="send-btn" id="send-btn" onclick="processUserQuery()">↑</button>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your production Render backend URL if needed (e.g., https://myfinergy-backend.onrender.com/chat)
+        const API_URL = "https://myfinergy-backend.onrender.com/chat";
+
+        const T1T4_FRAMEWORKS = [
+            { key: "teach", title: "TEACH", color: "teach", icon: "📚", subtitle: "Financial Literacy & Education", description: "Educate prospects on standard financial principles and baseline requirements before pitching." },
+            { key: "test", title: "TEST", color: "test", icon: "🧪", subtitle: "Financial Diagnostic & FinFit", description: "Run a complete diagnostic gap analysis to check total readiness for important goals." },
+            { key: "treat", title: "TREAT", color: "treat", icon: "💊", subtitle: "Actionable Goal-Based Solutions", description: "Provide specific financial remedies and product execution strategies tailored to gaps." },
+            { key: "track", title: "TRACK", color: "track", icon: "🎯", subtitle: "Ongoing Review & Monitoring", description: "Continuously review and adjust financial goals over time as client needs evolve." }
+        ];
+
+        // Query FastAPI backend endpoint
+        async function queryBackend(questionText) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: questionText })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.answer || "No answer returned from server.";
+            } catch (error) {
+                console.error("API Error:", error);
+                return "⚠️ Unable to connect to backend server. Ensure your backend service is running.";
+            }
+        }
+
+        async function handleFaqClick(questionText) {
+            appendUserMessage(questionText);
+            const answer = await queryBackend(questionText);
+            typeBotMessage(answer);
+        }
+
+        async function handleCardClick(frameworkKey, frameworkTitle) {
+            appendUserMessage(`Tell me about ${frameworkTitle}`);
+            const answer = await queryBackend(`What is ${frameworkTitle} in T1-T4 framework?`);
+            typeBotMessage(answer);
+        }
+
+        function handleT1T4Framework() {
+            appendUserMessage("📋 T1-T4 Framework");
+            
+            const chatBody = document.getElementById('chat-body');
+            const t1t4Container = document.createElement('div');
+            t1t4Container.className = 't1t4-container';
+
+            const introBubble = document.createElement('div');
+            introBubble.className = 'bot-bubble';
+            introBubble.innerHTML = `<div class="chat-text">The <strong>T1-T4 Advisory Framework</strong> structures your entire advisory conversation:</div>`;
+            t1t4Container.appendChild(introBubble);
+
+            const grid = document.createElement('div');
+            grid.className = 't1t4-grid';
+
+            T1T4_FRAMEWORKS.forEach(fw => {
+                const card = document.createElement('div');
+                card.className = `t1t4-card ${fw.color}`;
+                card.onclick = () => handleCardClick(fw.key, fw.title);
+                card.innerHTML = `
+                    <div class="t1t4-icon">${fw.icon}</div>
+                    <h3 class="t1t4-title ${fw.color}">${fw.title}</h3>
+                    <p class="t1t4-subtitle">${fw.subtitle}</p>
+                    <p class="t1t4-description">${fw.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+
+            t1t4Container.appendChild(grid);
+
+            const messageRow = document.createElement('div');
+            messageRow.className = 'message-row bot';
+            messageRow.appendChild(t1t4Container);
+
+            chatBody.appendChild(messageRow);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        async function processUserQuery() {
+            const inputField = document.getElementById('user-input');
+            const text = inputField.value.trim();
+            if (!text) return;
+
+            appendUserMessage(text);
+            inputField.value = '';
+
+            const answer = await queryBackend(text);
+            typeBotMessage(answer);
+        }
+
+        function appendUserMessage(text) {
+            const chatBody = document.getElementById('chat-body');
+            const userRow = document.createElement('div');
+            userRow.className = 'message-row user';
+            userRow.innerHTML = `<div class="user-bubble"><div class="chat-text">${escapeHtml(text)}</div></div>`;
+            chatBody.appendChild(userRow);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function typeBotMessage(fullText) {
+            const chatBody = document.getElementById('chat-body');
+            const botRow = document.createElement('div');
+            botRow.className = 'message-row bot';
+
+            const botContainer = document.createElement('div');
+            botContainer.className = 'bot-container';
+
+            const botBubble = document.createElement('div');
+            botBubble.className = 'bot-bubble';
+
+            const chatText = document.createElement('div');
+            chatText.className = 'chat-text';
+            botBubble.appendChild(chatText);
+            botContainer.appendChild(botBubble);
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'message-actions';
+            actionsDiv.innerHTML = `
+                <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
+                <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
+                <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
+            `;
+            botContainer.appendChild(actionsDiv);
+            botRow.appendChild(botContainer);
+            chatBody.appendChild(botRow);
+
+            let index = 0;
+            const speed = 12;
+
+            function typeChar() {
+                if (index < fullText.length) {
+                    chatText.innerText += fullText.charAt(index);
+                    index++;
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    setTimeout(typeChar, speed);
+                }
+            }
+
+            typeChar();
+        }
+
+        function copyMessage(btnElement) {
+            const botContainer = btnElement.closest('.bot-container');
+            const textToCopy = botContainer.querySelector('.chat-text').innerText;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopyFeedback(btnElement);
+                }).catch(() => fallbackCopy(textToCopy, btnElement));
+            } else {
+                fallbackCopy(textToCopy, btnElement);
+            }
+        }
+
+        function fallbackCopy(text, btnElement) {
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = text;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+            showCopyFeedback(btnElement);
+        }
+
+        function showCopyFeedback(btnElement) {
+            const originalText = btnElement.innerHTML;
+            btnElement.innerHTML = '✅ Copied!';
+            setTimeout(() => {
+                btnElement.innerHTML = originalText;
+            }, 2000);
+        }
+
+        function handleReaction(btnElement, reactionType) {
+            const parentActions = btnElement.closest('.message-actions');
+            const likeBtn = parentActions.children[1];
+            const dislikeBtn = parentActions.children[2];
+
+            if (reactionType === 'like') {
+                if (likeBtn.classList.contains('active-like')) {
+                    likeBtn.classList.remove('active-like');
+                } else {
+                    likeBtn.classList.add('active-like');
+                    dislikeBtn.classList.remove('active-dislike');
+                }
+            } else if (reactionType === 'dislike') {
+                if (dislikeBtn.classList.contains('active-dislike')) {
+                    dislikeBtn.classList.remove('active-dislike');
+                } else {
+                    dislikeBtn.classList.add('active-dislike');
+                    likeBtn.classList.remove('active-like');
+                }
+            }
+        }
+
+        function resetChat() {
+            const chatBody = document.getElementById('chat-body');
+            chatBody.innerHTML = `
+                <div class="message-row bot">
+                    <div class="bot-container">
+                        <div class="bot-bubble">
+                            <div class="chat-text">👋 Welcome to myFinergy AI Copilot!
+
+I have 150+ FAQs about myFinergy. You can ask me anything or click the Quick Access buttons.
+
+Try:
+• "hi" or "hello" for a greeting
+• "how to login" for portal credentials
+• Click any button for quick answers</div>
+                        </div>
+                        <div class="message-actions">
+                            <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
+                            <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
+                            <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
