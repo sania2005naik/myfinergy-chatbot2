@@ -17,6 +17,8 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
 
 import torch
 torch.set_num_threads(1)
@@ -107,7 +109,7 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
-    """Generates embeddings using pre-loaded SentenceTransformer and L2-normalizes them."""
+    """Generates embeddings using pre-loaded SentenceTransformer inside torch.no_grad()."""
     global _hf_model
     normalized_texts = [_normalize(t) for t in texts]
     
