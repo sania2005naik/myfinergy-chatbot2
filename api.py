@@ -2,6 +2,7 @@ import os
 import re
 import csv
 import json
+import gc
 import hashlib
 from datetime import datetime
 from contextlib import asynccontextmanager
@@ -19,6 +20,8 @@ os.environ["NUMEXPR_NUM_THREADS"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
 os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 import torch
 torch.set_num_threads(1)
@@ -109,18 +112,25 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
-    """Generates embeddings using pre-loaded SentenceTransformer inside torch.no_grad()."""
+    """Generates normalized embeddings inside torch.no_grad() with RAM cleanup."""
     global _hf_model
     normalized_texts = [_normalize(t) for t in texts]
     
     with torch.no_grad():
-        embeddings = _hf_model.encode(normalized_texts, convert_to_numpy=True, show_progress_bar=False)
+        embeddings = _hf_model.encode(
+            normalized_texts, 
+            convert_to_numpy=True, 
+            show_progress_bar=False,
+            batch_size=1
+        )
 
     if len(embeddings.shape) == 1:
         embeddings = np.expand_dims(embeddings, axis=0)
 
     norms = np.linalg.norm(embeddings, ord=2, axis=1, keepdims=True)
     embeddings = embeddings / np.clip(norms, a_min=1e-9, a_max=None)
+    
+    gc.collect()
     return embeddings.astype(np.float32)
 
 
