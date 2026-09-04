@@ -1,0 +1,2239 @@
+[
+  {
+    "id": "qa_001",
+    "category": "Getting Started",
+    "question": "What is myFinergy?",
+    "answer": "myFinergy is a sales-technology platform for financial advisors that helps move from product-based selling to goal-based financial planning. It enables advisors to conduct financial diagnostics, identify gaps, and present solutions systematically.",
+    "alt_questions": [
+      "what is finergy",
+      "about myfinergy",
+      "myfinergy meaning",
+      "what does it do"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_002",
+    "category": "Getting Started",
+    "question": "Who can use myFinergy?",
+    "answer": "Insurance advisors, mutual fund distributors, financial advisors, wealth advisors and professionals who help clients plan financial goals can use myFinergy.",
+    "alt_questions": [
+      "who is it for",
+      "target users",
+      "advisor types",
+      "eligibility"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_003",
+    "category": "Getting Started",
+    "question": "What problem does myFinergy solve?",
+    "answer": "It helps advisors identify qualified prospects, start meaningful conversations, conduct diagnostics, identify gaps, present goals visually, generate opportunities, follow up systematically, and improve engagement and conversion.",
+    "alt_questions": [
+      "why use it",
+      "benefits",
+      "what does it help with"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_004",
+    "category": "Getting Started",
+    "question": "Is myFinergy an insurance-selling app?",
+    "answer": "No. myFinergy is designed around financial goals and client needs, rather than starting with a particular financial product. It's a goal-based financial planning platform.",
+    "alt_questions": [
+      "insurance app",
+      "product selling",
+      "what kind of app"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_005",
+    "category": "Getting Started",
+    "question": "Why should I use a goal-based approach?",
+    "answer": "Clients buy more confidently when they understand what financial problem they're solving rather than simply being presented with a product. Goal-based selling is more client-centric and effective.",
+    "alt_questions": [
+      "why goal based",
+      "advantages",
+      "why not product selling",
+      "Why should I adopt a goal-based approach with my clients?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_006",
+    "category": "Getting Started",
+    "question": "Do I need to be a financial planning expert to use myFinergy?",
+    "answer": "No. myFinergy simplifies much of the financial assessment and presentation process so advisors can conduct structured conversations without being expert planners.",
+    "alt_questions": [
+      "expert required",
+      "expertise needed",
+      "knowledge required"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_007",
+    "category": "Getting Started",
+    "question": "Can a new advisor use myFinergy?",
+    "answer": "Yes. The platform can help new advisors follow a structured process instead of depending entirely on personal sales experience.",
+    "alt_questions": [
+      "beginner",
+      "fresher",
+      "new to selling",
+      "Can new or newly onboarded advisors use myFinergy?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_008",
+    "category": "Getting Started",
+    "question": "Can experienced advisors use myFinergy?",
+    "answer": "Yes. Experienced advisors can use it to standardize their advisory process, improve presentations and identify additional client opportunities.",
+    "alt_questions": [
+      "senior advisor",
+      "veteran",
+      "experienced"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_009",
+    "category": "Account & Login",
+    "question": "How do I log in?",
+    "answer": "Use your registered mobile number/credentials and follow the login process. You'll receive an OTP for authentication.",
+    "alt_questions": [
+      "login process",
+      "sign in",
+      "authentication",
+      "How do I log into my advisor account?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_010",
+    "category": "Account & Login",
+    "question": "What should I do if I forget my password?",
+    "answer": "Use the password recovery/reset option on the login screen and follow the steps to reset via OTP or email.",
+    "alt_questions": [
+      "reset password",
+      "forgot password",
+      "recovery"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_011",
+    "category": "Account & Login",
+    "question": "What should I do if I don't receive the OTP?",
+    "answer": "Check your mobile network, verify the registered mobile number is correct, ensure SMS is enabled. If it still doesn't arrive, contact support.",
+    "alt_questions": [
+      "no otp",
+      "otp issue",
+      "authentication problem",
+      "What should I do if I don't receive the login OTP?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_012",
+    "category": "Account & Login",
+    "question": "Can I use myFinergy from my mobile?",
+    "answer": "Yes, the mobile app provides full access to most features depending on your configuration.",
+    "alt_questions": [
+      "mobile app",
+      "android",
+      "iphone",
+      "Can I use myFinergy on my mobile phone?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_013",
+    "category": "Account & Login",
+    "question": "Can I use myFinergy from a computer?",
+    "answer": "Yes, if the web version is enabled. You can access myFinergy from any web browser.",
+    "alt_questions": [
+      "web version",
+      "desktop",
+      "computer",
+      "Can I access myFinergy from a desktop or laptop computer?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_014",
+    "category": "Account & Login",
+    "question": "Can I use myFinergy for multiple clients?",
+    "answer": "Yes. The CRM is designed to manage multiple prospects and clients.",
+    "alt_questions": [
+      "many clients",
+      "client management",
+      "Can I manage multiple prospects and clients in myFinergy?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_015",
+    "category": "CRM & Leads",
+    "question": "Where do I find my prospects?",
+    "answer": "Go to CRM → Leads. All your prospects and leads are listed there.",
+    "alt_questions": [
+      "find leads",
+      "where are leads",
+      "lead location",
+      "Where can I find and view my list of prospects?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_016",
+    "category": "CRM & Leads",
+    "question": "How do I add a new prospect?",
+    "answer": "Add through the CRM/client onboarding process and enter basic information. You can complete the profile progressively.",
+    "alt_questions": [
+      "new lead",
+      "onboard client",
+      "add contact",
+      "How do I add a new prospect or client to the platform?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_017",
+    "category": "CRM & Leads",
+    "question": "What information should I collect initially?",
+    "answer": "Start with: Name, Mobile number, Age, Occupation, Income/salary, Family information, Existing financial commitments, Financial goals.",
+    "alt_questions": [
+      "required info",
+      "client details",
+      "what to collect",
+      "What info should I collect when adding a new client?",
+      "What details do I need to add a new prospect?",
+      "What should I ask a client when onboarding them?",
+      "What information should I collect when onboarding a new client?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_018",
+    "category": "CRM & Leads",
+    "question": "Do I need complete client information before starting?",
+    "answer": "Not necessarily. You can begin with basic information and progressively complete the profile as you learn more.",
+    "alt_questions": [
+      "partial data",
+      "minimum required",
+      "Do I need to collect complete client data before initiating a financial diagnostic?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_019",
+    "category": "CRM & Leads",
+    "question": "Why is monthly income important?",
+    "answer": "Income establishes the client's financial capacity and provides context for goals, savings, protection and investment requirements.",
+    "alt_questions": [
+      "income importance",
+      "why income needed",
+      "Why is recording the client's monthly income necessary?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_020",
+    "category": "CRM & Leads",
+    "question": "Can I update client information later?",
+    "answer": "Yes. Client information should be updated as more accurate information becomes available. The system allows continuous updates.",
+    "alt_questions": [
+      "update client",
+      "edit profile",
+      "modify",
+      "Can I edit or update client information later?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_021",
+    "category": "CRM & Leads",
+    "question": "Where can I see client details?",
+    "answer": "From CRM → Leads → View Details. This opens the client's comprehensive profile.",
+    "alt_questions": [
+      "view client",
+      "client profile",
+      "see details",
+      "Where can I view full client details in the platform?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_022",
+    "category": "CRM & Leads",
+    "question": "What is View Details used for?",
+    "answer": "It allows you to access the client's profile and take actions like editing, creating FinFit, or sending assessments.",
+    "alt_questions": [
+      "details section",
+      "profile view",
+      "What is the 'View Details' option used for in the CRM?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_023",
+    "category": "CRM & Leads",
+    "question": "Can I edit client information?",
+    "answer": "Yes. Use the Edit option in the client's profile to update any information.",
+    "alt_questions": [
+      "edit client",
+      "modify details"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_024",
+    "category": "Client Onboarding",
+    "question": "What is the best way to introduce myFinergy to a prospect?",
+    "answer": "Position around: Let's check your financial fitness and see whether your current financial plan is strong enough to achieve your important goals.",
+    "alt_questions": [
+      "introduce",
+      "pitch",
+      "present",
+      "How do I pitch FinFit to a client?",
+      "How do I pitch myFinergy to a prospect?",
+      "How should I sell FinFit to a client?",
+      "What's a good way to bring up myFinergy with a new client?",
+      "What's the right way to bring up FinFit with a new prospect?",
+      "How should I introduce myFinergy or FinFit to a prospect?",
+      "What is the best way to ask a client for referrals using myFinergy?"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_025",
+    "category": "Client Onboarding",
+    "question": "What if the prospect says I already have an advisor?",
+    "answer": "Use myFinergy as a second-opinion financial fitness assessment. Position it as a complementary evaluation.",
+    "alt_questions": [
+      "existing advisor",
+      "second opinion",
+      "other advisor",
+      "How do I respond if a prospect says, 'I already have a financial advisor'?"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_026",
+    "category": "Client Onboarding",
+    "question": "What if the prospect says I don't need financial planning?",
+    "answer": "Explain that the purpose is to check whether their existing arrangements align with future goals. It's a fitness check, not a pitch.",
+    "alt_questions": [
+      "no planning needed",
+      "not interested",
+      "How do I handle a prospect who says, 'I don't need financial planning'?",
+      "How should I respond if a prospect says, 'I don't want to disclose my private financial numbers'?"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_027",
+    "category": "Client Onboarding",
+    "question": "What if the prospect says I don't have time?",
+    "answer": "Offer a short initial diagnostic conversation and explain that the platform is designed to simplify the process and save time.",
+    "alt_questions": [
+      "busy prospect",
+      "no time",
+      "short meeting",
+      "What should I say if a prospect claims they don't have time to meet?"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_028",
+    "category": "Client Onboarding",
+    "question": "What if the prospect says send me the details on WhatsApp?",
+    "answer": "Use the appropriate myFinergy presentation/report/link to continue digitally. WhatsApp sharing is supported.",
+    "alt_questions": [
+      "whatsapp request",
+      "digital sharing",
+      "What should I do if a prospect says, 'Just send me the details on WhatsApp'?"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_029",
+    "category": "Financial Diagnostic",
+    "question": "What is a financial diagnostic?",
+    "answer": "It is an assessment designed to identify how financially prepared a client is for their important future goals and financial risks.",
+    "alt_questions": [
+      "financial assessment",
+      "what is it",
+      "health check",
+      "What is a financial diagnostic in myFinergy?"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_030",
+    "category": "Financial Diagnostic",
+    "question": "What is FinFit?",
+    "answer": "FinFit represents the client's financial fitness/readiness based on the information and goals captured in myFinergy.",
+    "alt_questions": [
+      "what is finfit",
+      "finfit meaning",
+      "financial fitness"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_031",
+    "category": "Financial Diagnostic",
+    "question": "What is the Finergy Score?",
+    "answer": "The Finergy Score is a simplified indicator that helps communicate the client's financial readiness/strength. It's a visual representation of financial fitness.",
+    "alt_questions": [
+      "what is score",
+      "score meaning",
+      "finergy score",
+      "Why should I show the Finergy Score to my client?",
+      "What should I do if a client disagrees with their Finergy Score?",
+      "What steps should I take if a client receives a low Finergy Score?",
+      "What factors cause a client's Finergy Score to adjust over time?"
+    ],
+    "stage": "T2",
+    "subcategory": "Finergy Score"
+  },
+  {
+    "id": "qa_032",
+    "category": "Financial Diagnostic",
+    "question": "Why should I show a score to the client?",
+    "answer": "A score makes a complex financial situation easier to understand and gives the advisor a natural starting point for discussion.",
+    "alt_questions": [
+      "show score",
+      "why score",
+      "importance"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_033",
+    "category": "Financial Diagnostic",
+    "question": "Is the score meant to judge the client?",
+    "answer": "No. It should be positioned as a diagnostic indicator, not as a judgment. It's a helpful tool, not criticism.",
+    "alt_questions": [
+      "score judgment",
+      "not negative",
+      "Is the Finergy Score meant to judge or criticize the client?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_034",
+    "category": "Financial Diagnostic",
+    "question": "What should I do if the client's score is low?",
+    "answer": "Don't immediately sell a product. First identify: Why the score is low, Which financial gap is responsible, Which goal is affected, What action can improve it.",
+    "alt_questions": [
+      "low score",
+      "poor score",
+      "bad score"
+    ],
+    "stage": "T2",
+    "subcategory": "Finergy Score"
+  },
+  {
+    "id": "qa_035",
+    "category": "Financial Diagnostic",
+    "question": "What if the client's score is already good?",
+    "answer": "That's an opportunity to validate their existing planning, identify future goals, check protection adequacy, check retirement readiness, explore other gaps.",
+    "alt_questions": [
+      "good score",
+      "high score",
+      "excellent score",
+      "How should I handle a client who already has a high or good Finergy Score?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_036",
+    "category": "Financial Diagnostic",
+    "question": "Can a high Finergy Score still have opportunities?",
+    "answer": "Yes. A client can be financially healthy overall but still have specific gaps in protection, education funding, or retirement planning.",
+    "alt_questions": [
+      "high score gaps",
+      "healthy but gaps",
+      "Can a client with a high Finergy Score still have advisory opportunities?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_037",
+    "category": "FinFit Presentation",
+    "question": "What is the FinFit presentation?",
+    "answer": "It is a client-facing financial fitness presentation that helps the advisor explain the client's financial position and goals visually.",
+    "alt_questions": [
+      "what is presentation",
+      "finfit presentation"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_038",
+    "category": "FinFit Presentation",
+    "question": "How do I generate the FinFit presentation?",
+    "answer": "Workflow: CRM → Leads → View Details → Edit → Goals → Add Goals → FinFit Presentation → Share/Send PPT",
+    "alt_questions": [
+      "generate presentation",
+      "create presentation",
+      "steps",
+      "How do I generate a FinFit presentation or goal-based report?",
+      "What should I check if a FinFit report fails to generate?"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_039",
+    "category": "FinFit Presentation",
+    "question": "Why should I share the FinFit presentation before selling?",
+    "answer": "Because the presentation creates financial awareness and problem recognition before the advisor recommends solutions. Education first, selling second.",
+    "alt_questions": [
+      "share presentation",
+      "present before selling",
+      "Why should I share the FinFit presentation before discussing products?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_040",
+    "category": "FinFit Presentation",
+    "question": "Can I share the presentation on WhatsApp?",
+    "answer": "Yes, where WhatsApp sharing is supported. You can send the PPT link directly to the client's WhatsApp.",
+    "alt_questions": [
+      "whatsapp sharing",
+      "share on whatsapp",
+      "digital",
+      "Can I share the generated FinFit presentation directly on WhatsApp?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_041",
+    "category": "FinFit Presentation",
+    "question": "What message should I send along with the presentation?",
+    "answer": "Use a short message explaining that the presentation helps the prospect understand their financial fitness and goals.",
+    "alt_questions": [
+      "presentation message",
+      "what to say",
+      "What accompanying message should I send when sharing the FinFit presentation?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_042",
+    "category": "FinFit Presentation",
+    "question": "Should I send the presentation without talking to the prospect?",
+    "answer": "Preferably, establish context first. A presentation is more effective when the prospect understands why they're receiving it.",
+    "alt_questions": [
+      "cold send",
+      "best timing",
+      "Should I send the FinFit presentation without talking to the prospect first?"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_043",
+    "category": "FinFit Presentation",
+    "question": "What if the client doesn't open the presentation?",
+    "answer": "Use a value-based follow-up rather than repeatedly asking. Share educational content or insights instead.",
+    "alt_questions": [
+      "no response",
+      "not opened",
+      "follow up",
+      "What should I do if a client does not open or review the presentation?"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_044",
+    "category": "Goals",
+    "question": "Why are goals important in myFinergy?",
+    "answer": "Goals transform an abstract financial conversation into a specific financial requirement. They make planning concrete and measurable.",
+    "alt_questions": [
+      "importance of goals",
+      "why goals matter"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_045",
+    "category": "Goals",
+    "question": "What types of goals can I add?",
+    "answer": "Examples: Children's education, Children's marriage, Home purchase, Vehicle purchase, Retirement, Wealth creation, Emergency fund, Travel, Business.",
+    "alt_questions": [
+      "goal types",
+      "examples",
+      "categories",
+      "What types of financial goals can I capture in myFinergy?",
+      "What happens after I add goals to a client profile?"
+    ],
+    "stage": "T2",
+    "subcategory": "Goals"
+  },
+  {
+    "id": "qa_046",
+    "category": "Goals",
+    "question": "Can I add multiple goals?",
+    "answer": "Yes. A client's financial plan usually contains multiple goals. Most clients have 3-5 major goals.",
+    "alt_questions": [
+      "multiple goals",
+      "how many",
+      "many goals",
+      "Can I add multiple goals for a single client?"
+    ],
+    "stage": "T2",
+    "subcategory": "Goals"
+  },
+  {
+    "id": "qa_047",
+    "category": "Goals",
+    "question": "Why should I capture multiple goals?",
+    "answer": "Multiple goals help reveal multiple financial requirements and opportunities. One client might have 4 different needs requiring different solutions.",
+    "alt_questions": [
+      "why multiple",
+      "importance",
+      "Why is it beneficial to capture multiple financial goals?"
+    ],
+    "stage": "T2",
+    "subcategory": "Goals"
+  },
+  {
+    "id": "qa_048",
+    "category": "Goals",
+    "question": "Can I prioritize goals?",
+    "answer": "Goals can be discussed according to their importance, timeline and financial impact. Address urgent goals first.",
+    "alt_questions": [
+      "prioritize goals",
+      "priority",
+      "Can I prioritize or re-order a client's goals in myFinergy?"
+    ],
+    "stage": "T2",
+    "subcategory": "Goals"
+  },
+  {
+    "id": "qa_049",
+    "category": "Goals",
+    "question": "What happens after adding a goal?",
+    "answer": "The goal becomes part of the financial planning conversation and can be evaluated against the client's current financial position.",
+    "alt_questions": [
+      "after goal added",
+      "next steps"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_050",
+    "category": "Treatment",
+    "question": "What is Treatment in myFinergy?",
+    "answer": "Treatment is the recommended action plan for addressing an identified financial gap. It's the solution to the problem.",
+    "alt_questions": [
+      "what is treatment",
+      "meaning",
+      "financial solution",
+      "What does Treatment mean?"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_051",
+    "category": "Treatment",
+    "question": "What is the difference between Diagnosis and Treatment?",
+    "answer": "Diagnosis: What is the financial problem? Treatment: What should the client do about it?",
+    "alt_questions": [
+      "difference",
+      "problem vs solution"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_052",
+    "category": "Treatment",
+    "question": "Should treatment always mean selling a product?",
+    "answer": "No. Treatment should first address the client's financial need. A financial product may be one component of the solution.",
+    "alt_questions": [
+      "treatment selling",
+      "must sell product",
+      "Does 'Treatment' always involve selling a financial product?"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_053",
+    "category": "Treatment",
+    "question": "How do I identify an opportunity?",
+    "answer": "Look for gaps created by: Income risk, Protection requirements, Health-cost exposure, Retirement requirements, Education goals, Existing liabilities, Investment requirements.",
+    "alt_questions": [
+      "find opportunity",
+      "identify gap",
+      "see problem"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_054",
+    "category": "Treatment",
+    "question": "Can one client have multiple opportunities?",
+    "answer": "Yes. One client may have several independent financial needs, each representing a separate opportunity.",
+    "alt_questions": [
+      "multiple opportunities",
+      "many needs"
+    ],
+    "stage": "T3",
+    "subcategory": "Opportunity Discovery"
+  },
+  {
+    "id": "qa_055",
+    "category": "Treatment",
+    "question": "Why is this important for advisors?",
+    "answer": "Instead of 'What product can I sell?' ask 'What financial gap can I solve?' This shifts from product-focus to need-focus.",
+    "alt_questions": [
+      "importance",
+      "why matters"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_056",
+    "category": "Revenue",
+    "question": "What is the Revenue section?",
+    "answer": "The Revenue section helps the advisor understand potential business opportunities emerging from identified client needs.",
+    "alt_questions": [
+      "revenue section",
+      "what is it",
+      "opportunity tracking",
+      "What is the Revenue section in myFinergy?"
+    ],
+    "stage": "T3",
+    "subcategory": "Revenue"
+  },
+  {
+    "id": "qa_057",
+    "category": "Revenue",
+    "question": "Why should I check Revenue after completing the diagnostic?",
+    "answer": "Because the diagnostic can reveal multiple areas where the client may need professional advice.",
+    "alt_questions": [
+      "why check",
+      "importance",
+      "Why should I review the Revenue section after completing a diagnostic?"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_058",
+    "category": "Revenue",
+    "question": "How can one client generate multiple opportunities?",
+    "answer": "Example: One client → Retirement gap + Protection gap + Health gap + Child education goal. This creates multiple advisory conversations.",
+    "alt_questions": [
+      "multiple opportunities",
+      "many needs",
+      "Can a single client generate multiple business opportunities?"
+    ],
+    "stage": "T3",
+    "subcategory": "Revenue"
+  },
+  {
+    "id": "qa_059",
+    "category": "Revenue",
+    "question": "Does this mean I should sell four products immediately?",
+    "answer": "No. The objective is to prioritize the client's needs and address them appropriately, one at a time.",
+    "alt_questions": [
+      "sell all",
+      "immediate selling"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_060",
+    "category": "Revenue",
+    "question": "How do I avoid appearing sales-focused?",
+    "answer": "Lead with: Goal → Gap → Impact → Recommendation → Action rather than: Product → Features → Premium → Closing",
+    "alt_questions": [
+      "not pushy",
+      "authentic selling"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_061",
+    "category": "Conversation",
+    "question": "What should I say when starting the FinFit conversation?",
+    "answer": "A simple opening: Before we discuss any financial product, let's first understand whether your current financial plan is strong enough to achieve your important goals.",
+    "alt_questions": [
+      "opening line",
+      "how to begin"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_062",
+    "category": "Conversation",
+    "question": "What should I ask after showing the score?",
+    "answer": "Ask: Were you expecting this score? This creates a natural conversation.",
+    "alt_questions": [
+      "after score",
+      "next question",
+      "What question should I ask right after presenting the Finergy Score?",
+      "Why did my client's health score or shortfall recalculate after editing details?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_063",
+    "category": "Conversation",
+    "question": "What if the client disagrees with the score?",
+    "answer": "Don't argue. Check the information entered and ask whether any assumptions need correction.",
+    "alt_questions": [
+      "disagree score",
+      "wrong score"
+    ],
+    "stage": "T2",
+    "subcategory": "Finergy Score"
+  },
+  {
+    "id": "qa_064",
+    "category": "Conversation",
+    "question": "What if the client becomes worried after seeing a low score?",
+    "answer": "Reassure them: The purpose isn't to worry you. It is to identify areas we can improve before they become bigger problems.",
+    "alt_questions": [
+      "worried client",
+      "anxious client",
+      "How should I respond if a client gets anxious after seeing a low score?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_065",
+    "category": "Conversation",
+    "question": "Should I explain every calculation?",
+    "answer": "Not necessarily. Focus on the meaning, gap and action required. Keep it simple.",
+    "alt_questions": [
+      "explain calculations",
+      "technical details"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_066",
+    "category": "Conversation",
+    "question": "How long should the diagnostic conversation take?",
+    "answer": "The objective is to make the process more efficient than traditional lengthy financial-planning discussions. Duration depends on complexity.",
+    "alt_questions": [
+      "how long",
+      "duration",
+      "How long should a standard diagnostic conversation take?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_067",
+    "category": "Follow-Up",
+    "question": "What should I do after sharing the FinFit report?",
+    "answer": "Follow the CRM's recommended next action and continue the conversation based on the client's response.",
+    "alt_questions": [
+      "after report",
+      "next action",
+      "What should I do immediately after delivering a FinFit report?",
+      "Can I regenerate a presentation report after correcting a client entry error?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_068",
+    "category": "Follow-Up",
+    "question": "What if the client doesn't respond?",
+    "answer": "Use a value-based follow-up rather than repeatedly asking for a meeting. Share educational content or insights.",
+    "alt_questions": [
+      "no response",
+      "silent client",
+      "What should I do if the client doesn't respond?"
+    ],
+    "stage": "T4",
+    "subcategory": "Follow-Up"
+  },
+  {
+    "id": "qa_069",
+    "category": "Follow-Up",
+    "question": "What should I send as a follow-up?",
+    "answer": "Examples: Financial awareness content, Wisdom shots, Educational videos, Client testimonials, Community invitations, Financial insights.",
+    "alt_questions": [
+      "follow up content",
+      "what to share"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_070",
+    "category": "Follow-Up",
+    "question": "Why does myFinergy have follow-up workflows?",
+    "answer": "Because generating a diagnostic alone doesn't create business. Consistent follow-up converts awareness into conversation.",
+    "alt_questions": [
+      "why follow up",
+      "importance",
+      "Why does myFinergy include structured follow-up workflows?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_071",
+    "category": "Follow-Up",
+    "question": "What does Follow App notification daily mean?",
+    "answer": "It means the advisor should use the app's recommended follow-up action/notification to maintain systematic prospect engagement.",
+    "alt_questions": [
+      "daily notification",
+      "app reminder",
+      "What does the 'Follow App notification daily' routine mean?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_072",
+    "category": "WhatsApp",
+    "question": "Can I share myFinergy content through WhatsApp?",
+    "answer": "Yes, wherever WhatsApp sharing is enabled. You can send presentations, reports, and links directly.",
+    "alt_questions": [
+      "whatsapp sharing",
+      "share on whatsapp",
+      "Can I share myFinergy educational content directly to WhatsApp?",
+      "What type of follow-up content can I share using myFinergy?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_073",
+    "category": "WhatsApp",
+    "question": "What should I share first?",
+    "answer": "Ideally share content that matches the prospect's current stage: Introduction, Wisdom shot, Financial diagnostic, FinFit presentation, Test report.",
+    "alt_questions": [
+      "first share",
+      "what first",
+      "sequence",
+      "Which content should I share with a prospect first?"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_074",
+    "category": "WhatsApp",
+    "question": "Should I send everything at once?",
+    "answer": "No. Avoid overwhelming the prospect. Use a structured sequence.",
+    "alt_questions": [
+      "send all",
+      "multiple messages",
+      "Should I send multiple educational resources all at once?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_075",
+    "category": "WhatsApp",
+    "question": "What if the prospect says send me the premium?",
+    "answer": "Don't immediately jump to premium. First understand the requirement and explain the financial gap the recommendation addresses.",
+    "alt_questions": [
+      "premium request",
+      "wants product"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_076",
+    "category": "Test",
+    "question": "What is the Financial Test?",
+    "answer": "The test helps collect information required to understand the client's financial position and readiness.",
+    "alt_questions": [
+      "what is test",
+      "test purpose",
+      "What is the Financial Fitness Test?",
+      "What is the Financial Test in myFinergy?",
+      "What should I do if a client leaves the Financial Test uncompleted?",
+      "What does T2 (Test) stand for in the framework?"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_077",
+    "category": "Test",
+    "question": "How do I send the test link?",
+    "answer": "Use the Send Test Link action in the CRM/client workflow. The link is sent via WhatsApp or email.",
+    "alt_questions": [
+      "send test",
+      "how to send",
+      "How do I send the Financial Test link to a client?"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_078",
+    "category": "Test",
+    "question": "Can the client complete the test remotely?",
+    "answer": "Yes, where digital test link is enabled. Clients can complete it from home on their phone or computer.",
+    "alt_questions": [
+      "remote test",
+      "online test",
+      "Can clients complete the Financial Test remotely on their own devices?"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_079",
+    "category": "Test",
+    "question": "What if the client doesn't complete the test?",
+    "answer": "Follow up through the CRM and explain why completing the assessment helps personalize the financial discussion.",
+    "alt_questions": [
+      "incomplete test",
+      "not completed"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_080",
+    "category": "Test",
+    "question": "Can I send the Goal Link separately?",
+    "answer": "Yes, if that functionality is enabled. Goals can be discussed in a separate conversation.",
+    "alt_questions": [
+      "separate goal link",
+      "split process",
+      "Can I send the Goal Link separately to a prospect?"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_081",
+    "category": "Test",
+    "question": "What if the client gives incomplete information?",
+    "answer": "Follow up and complete the missing information before relying heavily on the resulting analysis.",
+    "alt_questions": [
+      "incomplete data",
+      "missing info"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_082",
+    "category": "Workflow",
+    "question": "What is the recommended myFinergy workflow?",
+    "answer": "Lead → Connect → Educate → Test → Diagnose → Present → Identify Gap → Treat → Follow-up → Track",
+    "alt_questions": [
+      "recommended process",
+      "workflow steps",
+      "What's the workflow from lead to close?",
+      "What's the end-to-end advisor process in myFinergy?",
+      "Walk me through the full myFinergy process",
+      "What is the standard end-to-end advisor workflow in myFinergy?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_083",
+    "category": "Workflow",
+    "question": "What does T1 mean?",
+    "answer": "T1 – Teach. Educate the prospect and create financial awareness.",
+    "alt_questions": [
+      "t1 stage",
+      "teach phase"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_084",
+    "category": "Workflow",
+    "question": "What does T2 mean?",
+    "answer": "T2 – Test. Conduct the financial assessment.",
+    "alt_questions": [
+      "t2 stage",
+      "test phase"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_085",
+    "category": "Workflow",
+    "question": "What does T3 mean?",
+    "answer": "T3 – Treat. Identify the gap and recommend appropriate action.",
+    "alt_questions": [
+      "t3 stage",
+      "treat phase"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_086",
+    "category": "Workflow",
+    "question": "What does T4 mean?",
+    "answer": "T4 – Track. Continue monitoring, follow-up and client engagement.",
+    "alt_questions": [
+      "t4 stage",
+      "track phase"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_087",
+    "category": "Workflow",
+    "question": "Why is this process better than directly pitching products?",
+    "answer": "Because the advisor establishes need before recommendation. This creates genuine client interest instead of resistance.",
+    "alt_questions": [
+      "process advantage",
+      "better than pitching"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_088",
+    "category": "Productivity",
+    "question": "How can myFinergy save an advisor's time?",
+    "answer": "It can reduce manual calculations, simplify presentation creation and provide structured workflows.",
+    "alt_questions": [
+      "save time",
+      "efficiency",
+      "How does myFinergy save time in my daily advisory operations?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_089",
+    "category": "Productivity",
+    "question": "Do I need Excel for financial calculations?",
+    "answer": "The purpose of myFinergy is to simplify calculations and presentation within the platform, reducing dependence on manually prepared spreadsheets.",
+    "alt_questions": [
+      "need excel",
+      "spreadsheet",
+      "Do I need to explain the mathematical calculations behind the score?",
+      "Do I still need complex Excel spreadsheets for client planning?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_090",
+    "category": "Productivity",
+    "question": "Do I need to create my own presentation?",
+    "answer": "The FinFit presentation/report workflow is designed to generate client-facing material from captured information.",
+    "alt_questions": [
+      "create presentation",
+      "auto generation",
+      "Do I need to design my own client presentation slides?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_091",
+    "category": "Productivity",
+    "question": "Can I use myFinergy during a client meeting?",
+    "answer": "Yes. It can be used as a conversation and diagnostic-support tool in real-time.",
+    "alt_questions": [
+      "meeting usage",
+      "live demo",
+      "Can I use myFinergy directly during live client meetings?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_092",
+    "category": "Productivity",
+    "question": "Can I use it before a meeting?",
+    "answer": "Yes. Preparing the client's information beforehand can make the meeting more productive.",
+    "alt_questions": [
+      "pre meeting",
+      "preparation",
+      "How should I use myFinergy before meeting a client?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_093",
+    "category": "Productivity",
+    "question": "Can I use it after the meeting?",
+    "answer": "Yes. It can support follow-up, additional diagnostics and treatment discussions.",
+    "alt_questions": [
+      "post meeting",
+      "follow up",
+      "How should I use myFinergy after a client meeting?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_094",
+    "category": "Conversion",
+    "question": "Does myFinergy guarantee sales?",
+    "answer": "No. It is a sales-enablement platform. Results depend on advisor execution, client quality, communication and follow-up.",
+    "alt_questions": [
+      "guarantee sales",
+      "promised results",
+      "Does using myFinergy guarantee sales closures?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_095",
+    "category": "Conversion",
+    "question": "How can myFinergy improve conversion?",
+    "answer": "By helping advisors establish credibility, educate before pitching, make gaps visible, create urgency, personalize conversations, and follow up systematically.",
+    "alt_questions": [
+      "improve conversion",
+      "higher sales"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_096",
+    "category": "Conversion",
+    "question": "What if I already have a good sales process?",
+    "answer": "Use myFinergy as a technology layer to strengthen your existing process.",
+    "alt_questions": [
+      "existing process",
+      "my system",
+      "How does myFinergy fit into my existing sales process?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_097",
+    "category": "Conversion",
+    "question": "Can myFinergy help generate referrals?",
+    "answer": "It can support referral workflows by helping advisors deliver value and share educational/client-oriented content.",
+    "alt_questions": [
+      "generate referrals",
+      "word of mouth",
+      "How can myFinergy help me generate more client referrals?"
+    ],
+    "stage": "T4",
+    "subcategory": "Relationship Growth"
+  },
+  {
+    "id": "qa_098",
+    "category": "Conversion",
+    "question": "How do I ask for a referral?",
+    "answer": "After delivering value, ask: Who else in your family or circle would benefit from doing a similar financial fitness assessment?",
+    "alt_questions": [
+      "ask referral",
+      "referral request"
+    ],
+    "stage": "T4",
+    "subcategory": "Relationship Growth"
+  },
+  {
+    "id": "qa_099",
+    "category": "Premium Advisor",
+    "question": "How can myFinergy help me become a premium advisor?",
+    "answer": "By changing your positioning from I sell financial products to I help clients identify and solve financial gaps.",
+    "alt_questions": [
+      "premium advisor",
+      "high value advisor",
+      "How does myFinergy help elevate my brand as a premium advisor?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_100",
+    "category": "Premium Advisor",
+    "question": "Why should a premium advisor use diagnostics?",
+    "answer": "Premium advisory is built around understanding, analysis, personalization and ongoing guidance.",
+    "alt_questions": [
+      "diagnostics importance",
+      "premium advantage"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_101",
+    "category": "Premium Advisor",
+    "question": "Can I use myFinergy with HNI clients?",
+    "answer": "Yes, subject to the complexity of the client's financial situation and the capabilities of the platform.",
+    "alt_questions": [
+      "hni clients",
+      "high net worth",
+      "Can I use myFinergy with High Net Worth Individual (HNI) prospects?"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_102",
+    "category": "Premium Advisor",
+    "question": "Should I use the same presentation for every client?",
+    "answer": "The information should be client-specific. Use the diagnostic to create a personalized conversation.",
+    "alt_questions": [
+      "same presentation",
+      "customization",
+      "Should I use the exact same pitch for every client?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_103",
+    "category": "Mistakes",
+    "question": "What is the biggest mistake advisors make?",
+    "answer": "Starting with the product instead of the client's financial problem.",
+    "alt_questions": [
+      "common mistake",
+      "biggest error",
+      "What is the single biggest mistake advisors make when pitching?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_104",
+    "category": "Mistakes",
+    "question": "Should I show the product before the FinFit assessment?",
+    "answer": "Ideally, establish the financial need first.",
+    "alt_questions": [
+      "product timing",
+      "when to present",
+      "Should I share product illustrations before conducting the FinFit assessment?"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_105",
+    "category": "Mistakes",
+    "question": "Should I explain every feature of myFinergy to the client?",
+    "answer": "No. Clients don't need to understand the software. They need to understand their financial situation.",
+    "alt_questions": [
+      "explain features",
+      "client education"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_106",
+    "category": "Mistakes",
+    "question": "Should I focus only on the score?",
+    "answer": "No. The score is a conversation starter. The important part is understanding why the score is what it is and what can improve it.",
+    "alt_questions": [
+      "only score",
+      "score focus",
+      "Is the Finergy Score the only thing I should focus on during a meeting?"
+    ],
+    "stage": "T2",
+    "subcategory": "Finergy Score"
+  },
+  {
+    "id": "qa_107",
+    "category": "Mistakes",
+    "question": "Should I send too many WhatsApp messages?",
+    "answer": "No. Follow a purposeful communication sequence.",
+    "alt_questions": [
+      "many messages",
+      "message frequency"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_108",
+    "category": "Technical",
+    "question": "Is my client data important?",
+    "answer": "Yes. Treat client financial information as confidential and use the platform according to applicable privacy and security requirements.",
+    "alt_questions": [
+      "data security",
+      "privacy concerns"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_109",
+    "category": "Technical",
+    "question": "Can I edit incorrect client information?",
+    "answer": "Yes, where editing is enabled.",
+    "alt_questions": [
+      "correct data",
+      "fix error"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_110",
+    "category": "Technical",
+    "question": "What happens if I accidentally enter the wrong income?",
+    "answer": "Correct the client profile before relying on the resulting analysis.",
+    "alt_questions": [
+      "wrong income",
+      "data error",
+      "What should I do if I accidentally enter the wrong income for a client?",
+      "What happens if I enter inaccurate client data into the system?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_111",
+    "category": "Technical",
+    "question": "Why does the output change when I update information?",
+    "answer": "Because the assessment depends on the information and assumptions used in the financial analysis.",
+    "alt_questions": [
+      "changing results",
+      "different output"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_112",
+    "category": "Technical",
+    "question": "Why does the client's score change?",
+    "answer": "Changes in income, goals, savings, expenses, liabilities, assumptions or other financial inputs can affect the assessment.",
+    "alt_questions": [
+      "changing score",
+      "different score"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_113",
+    "category": "Subscription",
+    "question": "How do I know which plan I'm on?",
+    "answer": "Check your account/subscription section.",
+    "alt_questions": [
+      "check plan",
+      "my subscription"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_114",
+    "category": "Subscription",
+    "question": "What happens when my subscription expires?",
+    "answer": "Access to subscription-based functionality may be restricted according to the applicable plan terms.",
+    "alt_questions": [
+      "subscription expiry",
+      "expired plan",
+      "What happens to my account access if my subscription expires?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_115",
+    "category": "Subscription",
+    "question": "Can I renew my subscription?",
+    "answer": "Yes, subject to the available renewal plans/offers.",
+    "alt_questions": [
+      "renew subscription",
+      "reactivate",
+      "How do I renew my active myFinergy subscription?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_116",
+    "category": "Subscription",
+    "question": "Can I upgrade my plan?",
+    "answer": "If an upgrade option is available, you can upgrade according to the applicable pricing and terms.",
+    "alt_questions": [
+      "upgrade plan",
+      "better plan",
+      "Can I upgrade my subscription plan to access higher-tier features?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_117",
+    "category": "Subscription",
+    "question": "What happens to my clients if I renew?",
+    "answer": "Client/data access depends on the specific subscription and platform policies applicable to your account.",
+    "alt_questions": [
+      "client access",
+      "data retention"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_118",
+    "category": "Troubleshooting",
+    "question": "The app isn't loading. What should I do?",
+    "answer": "Check: Internet connection, App/browser status, Login status, App version. Try restarting the app. If the issue continues, contact support.",
+    "alt_questions": [
+      "app not loading",
+      "app crash"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_119",
+    "category": "Troubleshooting",
+    "question": "A button isn't working. What should I do?",
+    "answer": "Capture a screenshot, note the action you were trying to perform and contact support.",
+    "alt_questions": [
+      "button not working",
+      "feature not working",
+      "What should I do if a screen button or feature isn't responding?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_120",
+    "category": "Troubleshooting",
+    "question": "My client isn't receiving the WhatsApp message. What should I check?",
+    "answer": "Verify: Correct mobile number, WhatsApp availability, Internet connectivity, Message permissions, Whether the client has blocked the number.",
+    "alt_questions": [
+      "message not received",
+      "whatsapp issue",
+      "What should I check if a client doesn't receive a message I sent via WhatsApp?"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_121",
+    "category": "Troubleshooting",
+    "question": "The report isn't generating. What should I check?",
+    "answer": "Verify that the required client and goal information has been completed.",
+    "alt_questions": [
+      "report issue",
+      "report generation"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_122",
+    "category": "Troubleshooting",
+    "question": "I entered incorrect information. Can I regenerate the report?",
+    "answer": "If regeneration is supported, update the information and regenerate the report.",
+    "alt_questions": [
+      "incorrect data",
+      "regenerate report"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_123",
+    "category": "Strategy",
+    "question": "Should I use myFinergy for every prospect?",
+    "answer": "It can be particularly useful when the prospect is willing to discuss financial goals and planning.",
+    "alt_questions": [
+      "use for all",
+      "selective use",
+      "Should I use myFinergy's diagnostic approach with every new prospect?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_124",
+    "category": "Strategy",
+    "question": "Should I use myFinergy with existing clients?",
+    "answer": "Absolutely. Existing clients can be reassessed to identify changing goals and new financial gaps.",
+    "alt_questions": [
+      "existing clients",
+      "reassessment",
+      "Can I use myFinergy to reassess existing clients?"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_125",
+    "category": "Strategy",
+    "question": "Can I use myFinergy for annual client reviews?",
+    "answer": "Yes. A periodic financial fitness review can create a structured annual review conversation.",
+    "alt_questions": [
+      "annual review",
+      "yearly checkup",
+      "How can I incorporate myFinergy into annual client policy reviews?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_126",
+    "category": "Strategy",
+    "question": "Can I use it for cross-selling?",
+    "answer": "The better positioning is need-based opportunity discovery rather than cross-selling.",
+    "alt_questions": [
+      "cross sell",
+      "upsell",
+      "How can I use myFinergy for ethical cross-selling and up-selling?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_127",
+    "category": "Strategy",
+    "question": "Can one diagnostic create multiple product opportunities?",
+    "answer": "Potentially yes—but each opportunity should originate from a genuine financial requirement.",
+    "alt_questions": [
+      "multiple needs",
+      "multiple products"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_128",
+    "category": "Strategy",
+    "question": "What is the ideal advisor mindset?",
+    "answer": "Instead of asking What can I sell this client? ask What financial goal is this client trying to achieve, what could stop them, and how can I help?",
+    "alt_questions": [
+      "mindset shift",
+      "right approach",
+      "What is the ideal professional mindset for a myFinergy advisor?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_129",
+    "category": "Objections",
+    "question": "I already have investments. How should I respond?",
+    "answer": "Response: That's good. Let's check whether your existing investments are aligned with all your important future goals.",
+    "alt_questions": [
+      "existing investments",
+      "investment objection",
+      "How should I respond if a client says, 'I already have mutual funds and stock investments'?"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_130",
+    "category": "Objections",
+    "question": "I already have insurance. How should I respond?",
+    "answer": "Response: That's a good starting point. Let's check whether the existing protection is still adequate for your current income and family's needs.",
+    "alt_questions": [
+      "existing insurance",
+      "insurance objection",
+      "How should I respond if a client says, 'I already have sufficient life insurance cover'?"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_131",
+    "category": "Objections",
+    "question": "I don't want to share my financial details. How to respond?",
+    "answer": "Response: That's completely understandable. We only need the information required for the assessment, and you can decide what you're comfortable discussing.",
+    "alt_questions": [
+      "privacy concern",
+      "disclosure hesitant"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_132",
+    "category": "Objections",
+    "question": "I don't need financial planning. How to respond?",
+    "answer": "Response: You may already have a plan. The purpose of this exercise is simply to check whether that plan is still on track.",
+    "alt_questions": [
+      "no planning needed",
+      "not interested"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_133",
+    "category": "Objections",
+    "question": "I'll think about it. How to respond?",
+    "answer": "Response: Absolutely. Before you decide, let's make sure you clearly understand the financial gap and the options available to address it.",
+    "alt_questions": [
+      "think about it",
+      "decision postponed"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_134",
+    "category": "Advanced",
+    "question": "How do I use myFinergy for family financial planning?",
+    "answer": "Create/assess the family's major goals collectively and identify the financial responsibilities associated with each goal.",
+    "alt_questions": [
+      "family planning",
+      "joint goals"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_135",
+    "category": "Advanced",
+    "question": "How do I use it for retirement planning?",
+    "answer": "Capture retirement-related information, determine the desired retirement lifestyle and identify the financial requirement/gap.",
+    "alt_questions": [
+      "retirement planning",
+      "retirement goals"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_136",
+    "category": "Advanced",
+    "question": "How do I use it for young professionals?",
+    "answer": "Focus on: First salary, Emergency fund, Protection, Lifestyle management, Long-term investments, Home purchase, Retirement.",
+    "alt_questions": [
+      "young professionals",
+      "early career"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_137",
+    "category": "Advanced",
+    "question": "How do I use it for parents?",
+    "answer": "Focus on: Child education, Child marriage, Family protection, Health-cost exposure, Retirement, Legacy/wealth transfer.",
+    "alt_questions": [
+      "parents planning",
+      "child goals"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_138",
+    "category": "Advanced",
+    "question": "How do I use it for clients aged 45+?",
+    "answer": "Focus on: Retirement readiness, Existing liabilities, Protection, Children's goals, Healthcare exposure, Income replacement.",
+    "alt_questions": [
+      "45 plus",
+      "mature clients"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_139",
+    "category": "Most Important",
+    "question": "What is the right way to use myFinergy?",
+    "answer": "Don't use myFinergy as a product-selling tool. Use it as a Financial Advisor Conversation Engine: ATTRACT → TEACH → TEST → DIAGNOSE → PRESENT → TREAT → TRACK → GROW",
+    "alt_questions": [
+      "best practices",
+      "correct usage"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_140",
+    "category": "Most Important",
+    "question": "What is the myFinergy Advisor Philosophy?",
+    "answer": "Instead of selling products, help clients identify and solve financial gaps. Lead with understanding, not selling. Build relationships through value delivery.",
+    "alt_questions": [
+      "philosophy",
+      "core belief"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_141",
+    "category": "Getting Started",
+    "question": "How is myFinergy different from traditional financial planning?",
+    "answer": "Traditional planning often starts with products. myFinergy starts with goals. This creates genuine need recognition and higher client engagement.",
+    "alt_questions": [
+      "difference from traditional",
+      "unique approach"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_142",
+    "category": "Conversion",
+    "question": "What conversion rates do advisors typically see with myFinergy?",
+    "answer": "Results vary, but advisors using FinFit typically see 40-50% conversion compared to 20-30% without the diagnostic. It depends on follow-up quality.",
+    "alt_questions": [
+      "conversion rate",
+      "expected results",
+      "How does myFinergy help increase conversion rates?"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_143",
+    "category": "Productivity",
+    "question": "How much time does myFinergy save per client?",
+    "answer": "Most advisors save 1-2 hours per client by eliminating manual calculations and presentation creation.",
+    "alt_questions": [
+      "time saved",
+      "efficiency gain"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_144",
+    "category": "Goals",
+    "question": "What is the ideal number of goals per client?",
+    "answer": "3-5 major goals work well. This provides comprehensive planning without overwhelming the client.",
+    "alt_questions": [
+      "how many goals",
+      "optimal number"
+    ],
+    "stage": "T2",
+    "subcategory": null
+  },
+  {
+    "id": "qa_145",
+    "category": "Follow-Up",
+    "question": "What is the best follow-up frequency?",
+    "answer": "Every 3-5 days with different types of content (education, testimonials, insights). Too frequent is annoying; too sparse is forgotten.",
+    "alt_questions": [
+      "follow up timing",
+      "frequency"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_146",
+    "category": "Conversation",
+    "question": "How do I recover from a low-score shock?",
+    "answer": "Immediately focus on one actionable gap: This gap is solvable. If we address just this, your score will improve significantly.",
+    "alt_questions": [
+      "low score reaction",
+      "damage control"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_147",
+    "category": "Strategy",
+    "question": "Should I segment my prospects into different strategies?",
+    "answer": "Yes. Young professionals need different conversations than retirees. Use myFinergy flexibly for different life stages.",
+    "alt_questions": [
+      "segmentation strategy",
+      "different approaches"
+    ],
+    "stage": "T4",
+    "subcategory": null
+  },
+  {
+    "id": "qa_148",
+    "category": "Mistakes",
+    "question": "What if I'm too pushy with follow-ups?",
+    "answer": "Back off and send only valuable content. The goal is to build a relationship, not to annoy. Quality over quantity.",
+    "alt_questions": [
+      "pushy approach",
+      "too aggressive"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_149",
+    "category": "Premium Advisor",
+    "question": "How do premium advisors position the diagnostic differently?",
+    "answer": "Premium advisors position it as a comprehensive financial health check rather than a sales tool. This attracts better quality clients.",
+    "alt_questions": [
+      "premium positioning",
+      "high end approach"
+    ],
+    "stage": "T1",
+    "subcategory": null
+  },
+  {
+    "id": "qa_150",
+    "category": "Revenue",
+    "question": "How should I present multiple opportunities without seeming greedy?",
+    "answer": "Frame it as: You have 4 important goals. We should address the most urgent one first, then systematically handle the others.",
+    "alt_questions": [
+      "multiple sales",
+      "many opportunities"
+    ],
+    "stage": "T3",
+    "subcategory": null
+  },
+  {
+    "id": "qa_151",
+    "category": "Getting Started",
+    "question": "What is the T1, T2, T3, T4 framework?",
+    "alt_questions": [
+      "Explain the T1 T2 T3 T4 stages",
+      "Can you walk me through T1 to T4?",
+      "What do T1 T2 T3 T4 stand for?",
+      "What does T1 (Teach) stand for in the framework?",
+      "What does T3 (Treat) stand for in the framework?",
+      "What does T4 (Track) stand for in the framework?"
+    ],
+    "answer": "T1 (Teach) – educate the prospect and create financial awareness. T2 (Test) – conduct the financial assessment. T3 (Treat) – identify the gap and recommend appropriate action. T4 (Track) – continue monitoring, follow-up and client engagement.",
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_152",
+    "category": "General",
+    "question": "How do I pitch myFinergy or pitch this app to a new client?",
+    "answer": "Avoid leading with a product sales pitch. Position it as a diagnostic service by saying: 'Let’s run a quick 5-minute Financial Fitness Check to ensure your current investments are aligned to achieve your life goals.'",
+    "alt_questions": [
+      "How do I pitch this app to a new client?",
+      "how to pitch myfinergy",
+      "how to pitch to a new client",
+      "pitching finfit to clients"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_153",
+    "category": "General",
+    "question": "How do experienced advisors benefit from using myFinergy?",
+    "answer": "Experienced advisors can use myFinergy to standardize their pitch, deliver higher-quality visual presentations, uncover hidden cross-selling opportunities across existing client books, and scale their practice efficiently.",
+    "alt_questions": [
+      "is myfinergy useful for senior advisors",
+      "why should experienced agents use myfinergy",
+      "how does myfinergy help established wealth managers"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_154",
+    "category": "General",
+    "question": "How can I edit an existing client's profile data?",
+    "answer": "Open the client's profile page via **CRM → Leads → View Details** and click the **Edit** button to update their demographic or financial records.",
+    "alt_questions": [
+      "edit prospect info",
+      "change client details",
+      "how to fix wrong client entries"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_155",
+    "category": "General",
+    "question": "Why are goals central to myFinergy's methodology?",
+    "answer": "Goals transform generic financial advice into personal, emotion-driven milestones that make clients active participants in planning their financial future.",
+    "alt_questions": [
+      "why focus on goals",
+      "importance of setting goals in myfinergy"
+    ],
+    "stage": "T2",
+    "subcategory": "Goals"
+  },
+  {
+    "id": "qa_156",
+    "category": "General",
+    "question": "How do I identify advisory opportunities using myFinergy?",
+    "answer": "Look for gaps in the diagnostic summary, such as insufficient term protection, lack of health buffer, delayed retirement planning, or unbacked future child education goals.",
+    "alt_questions": [
+      "how to discover opportunities",
+      "identifying cross sell opportunities in platform"
+    ],
+    "stage": "T3",
+    "subcategory": "Opportunity Discovery"
+  },
+  {
+    "id": "qa_157",
+    "category": "General",
+    "question": "Why is gap identification advantageous for advisors?",
+    "answer": "Shift your perspective from asking 'What product can I sell?' to 'Which financial gap can I solve?'. This builds long-term trust, positions you as a professional, and yields higher client retention.",
+    "alt_questions": [
+      "why lead with gap identification",
+      "value of finding client financial gaps"
+    ],
+    "stage": "T3",
+    "subcategory": "Financial Gap"
+  },
+  {
+    "id": "qa_158",
+    "category": "General",
+    "question": "How does a client diagnostic translate into multiple business lines?",
+    "answer": "For example, a client profile might show a $150k life protection shortfall, a $20k health cover gap, and a $500 monthly investment deficit for college funds, yielding three advisory conversations.",
+    "alt_questions": [
+      "example of multi solution diagnostic",
+      "how cross sell works in finfit"
+    ],
+    "stage": "T3",
+    "subcategory": "Revenue"
+  },
+  {
+    "id": "qa_159",
+    "category": "General",
+    "question": "Should I attempt to pitch solutions for all identified gaps at once?",
+    "answer": "No. Prioritize the client's most urgent financial gaps first (typically risk protection and immediate goal needs) to keep them from feeling overwhelmed.",
+    "alt_questions": [
+      "should I sell all products together",
+      "how many products to pitch at once"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_160",
+    "category": "General",
+    "question": "How can I avoid coming across as sales-driven during discussions?",
+    "answer": "Follow the advisory sequence: **Goal → Gap → Impact → Recommendation → Action**. Focus on educating the client about their gap rather than pushing product features.",
+    "alt_questions": [
+      "how to avoid aggressive sales pitch",
+      "consultative advisory pitch framework"
+    ],
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_161",
+    "category": "General",
+    "question": "What is a good opening script when initiating a FinFit discussion?",
+    "answer": "Say: 'Before we evaluate any specific product options, let’s run a brief check to confirm whether your existing plan guarantees your family's future goals.'",
+    "alt_questions": [
+      "finfit conversation opening line",
+      "script to introduce financial diagnostic"
+    ],
+    "stage": "T2",
+    "subcategory": "FinFit Presentation"
+  },
+  {
+    "id": "qa_162",
+    "category": "General",
+    "question": "How should I respond if a client asks, 'Just tell me the premium price'?",
+    "answer": "Say: 'I can give you premium figures right away, but let's first make sure the coverage amount actually covers your family's specific goal gap so you don't overpay or under-insure.'",
+    "alt_questions": [
+      "client asks for premium immediately",
+      "how to handle demand for instant product quotes"
+    ],
+    "stage": "T1",
+    "subcategory": "Prospect Engagement"
+  },
+  {
+    "id": "qa_163",
+    "category": "General",
+    "question": "How should I proceed if a client submits incomplete data?",
+    "answer": "Reach out to clarify the missing inputs before generating and sharing the final FinFit report.",
+    "alt_questions": [
+      "what if client skips fields in test",
+      "handling partial questionnaire data"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_164",
+    "category": "General",
+    "question": "Why is the T1-T4 sales process more effective than traditional product pitches?",
+    "answer": "It builds trust and establishes clear need before presenting product recommendations, reducing client resistance and boosting conversion rates.",
+    "alt_questions": [
+      "why use T1-T4 model",
+      "benefits of teaching before selling"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_165",
+    "category": "General",
+    "question": "Why is diagnostic-led planning essential for advising high-value clients?",
+    "answer": "High-value clients expect professional analysis, objective evaluation, and tailored planning over standard product sales pitches.",
+    "alt_questions": [
+      "why high net worth clients expect diagnostics",
+      "diagnostic selling for premium clients"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_166",
+    "category": "General",
+    "question": "Should I explain all technical app features of myFinergy to my client?",
+    "answer": "No. Keep the focus entirely on their personal financial numbers, goals, and gap solutions—not on the software mechanics.",
+    "alt_questions": [
+      "should I explain app software to client",
+      "how much platform tech to discuss with client"
+    ],
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_167",
+    "category": "General",
+    "question": "Should I broadcast generic messaging repeatedly on WhatsApp?",
+    "answer": "No. Avoid spamming. Send targeted, valuable insights aligned with where the client is in your sales pipeline.",
+    "alt_questions": [
+      "how often to whatsapp clients",
+      "avoiding spamming leads on whatsapp"
+    ],
+    "stage": "T4",
+    "subcategory": "Follow-Up"
+  },
+  {
+    "id": "qa_168",
+    "category": "General",
+    "question": "How should I handle client data privacy and confidentiality?",
+    "answer": "Treat all client financial information as strictly confidential, using secure credentials and adhering to platform privacy policies.",
+    "alt_questions": [
+      "is client data safe in myfinergy",
+      "privacy standards for advisor client data"
+    ],
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_169",
+    "category": "General",
+    "question": "Can I edit client details after a diagnostic report has been created?",
+    "answer": "Yes. You can edit client details at any time and regenerate updated reports.",
+    "alt_questions": [
+      "can I update data after generating finfit",
+      "re-editing client details"
+    ],
+    "stage": "T4",
+    "subcategory": "Follow-Up"
+  },
+  {
+    "id": "qa_170",
+    "category": "Subscription",
+    "question": "How do I check my current myFinergy subscription plan status?",
+    "answer": "Navigate to the **Account / Profile Settings** tab in your app to review your current active plan, features, and renewal dates.",
+    "alt_questions": [
+      "my current plan",
+      "check subscription",
+      "view plan details",
+      "where to check advisor plan tier"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_171",
+    "category": "Subscription",
+    "question": "Will my client records and lead database be saved if I renew my plan?",
+    "answer": "Yes. Your lead data, diagnostic history, and client records remain saved and accessible in your CRM upon subscription renewal.",
+    "alt_questions": [
+      "do I lose client data after renewal",
+      "will lead history remain safe after subscription renew"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_172",
+    "category": "Troubleshooting",
+    "question": "What troubleshooting steps should I take if the app fails to load?",
+    "answer": "Verify your mobile internet connection, restart the mobile app or clear your browser cache, check for software updates, or reach out to advisor support.",
+    "alt_questions": [
+      "app not working",
+      "app loading error",
+      "myfinergy app stuck",
+      "app crash",
+      "troubleshoot finergy login freeze"
+    ],
+    "stage": null,
+    "subcategory": null
+  },
+  {
+    "id": "qa_173",
+    "category": "General",
+    "question": "Can a single client assessment lead to sales across multiple product lines?",
+    "answer": "Yes. A complete assessment often reveals simultaneous needs for term life, critical illness cover, and systematic investments.",
+    "alt_questions": [
+      "multi product opportunities per lead",
+      "can I sell life and health together using finfit"
+    ],
+    "stage": "T3",
+    "subcategory": "Revenue"
+  }
+]

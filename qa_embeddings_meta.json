@@ -1,5 +1,1 @@
-{
-  "count": 510,
-  "texts_hash": "02006590668f0e8467567d5f9a64c923",
-  "model": "sentence-transformers/all-MiniLM-L6-v2"
-}
+{"count": 680, "texts_hash": -1429709192466965105, "model": "all-MiniLM-L6-v2"}

@@ -21,7 +21,7 @@
         }
 
         .sidebar {
-            width: 300px;
+            width: 320px;
             background-color: #0b1329;
             padding: 20px;
             display: flex;
@@ -73,7 +73,7 @@
         }
 
         .sidebar-section {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .section-title {
@@ -88,7 +88,7 @@
         .sidebar-buttons {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .st-btn {
@@ -96,22 +96,59 @@
             color: #cbd5e1;
             border: 1px solid #334155;
             border-radius: 8px;
-            padding: 11px 14px;
-            font-size: 14px;
+            padding: 10px 12px;
+            font-size: 13px;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
             font-weight: 500;
-            min-height: 42px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
 
-        .st-btn:hover {
+        .st-btn:hover, .st-btn.active-stage {
             background-color: #1f2937;
             border-color: #3b82f6;
             color: #3b82f6;
-            transform: translateX(2px);
+        }
+
+        .st-btn.teach { border-left: 4px solid #8b5cf6; }
+        .st-btn.test { border-left: 4px solid #3b82f6; }
+        .st-btn.treat { border-left: 4px solid #10b981; }
+        .st-btn.track { border-left: 4px solid #f97316; }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 120px;
+            max-height: 220px;
+            overflow-y: auto;
+            margin-top: 8px;
+            padding-right: 4px;
+        }
+
+        .faq-item-btn {
+            background-color: #111827;
+            color: #94a3b8;
+            border: 1px solid #1f2937;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3;
+            flex-shrink: 0;
+        }
+
+        .faq-item-btn:hover {
+            border-color: #3b82f6;
+            color: #ffffff;
+            background-color: #1e293b;
         }
 
         .sidebar-footer {
@@ -131,7 +168,6 @@
             transition: all 0.2s ease;
             font-size: 14px;
             font-weight: 500;
-            min-height: 42px;
         }
 
         .reset-btn:hover {
@@ -175,7 +211,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-width: 80%;
+            max-width: 85%;
         }
 
         .user-bubble {
@@ -191,31 +227,79 @@
             color: #e2e8f0;
             border: 1px solid #334155;
             border-radius: 18px 18px 18px 4px;
-            padding: 14px 20px;
+            padding: 16px 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .chat-text {
             font-size: 15px;
-            line-height: 1.5;
+            line-height: 1.6;
             white-space: pre-wrap;
             word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .chat-text b {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .stage-questions-card {
+            background-color: #1a202c;
+            border: 1px solid #3b82f6;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .stage-questions-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .stage-questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stage-q-btn {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .stage-q-btn:hover {
+            border-color: #3b82f6;
+            background-color: #2563eb;
+            color: #ffffff;
         }
 
         .message-actions {
             display: flex;
-            gap: 6px;
-            margin-top: 2px;
+            gap: 8px;
+            margin-top: 4px;
             margin-left: 4px;
             align-items: center;
         }
 
         .action-btn {
             background-color: transparent;
-            border: none;
-            color: #64748b;
-            padding: 3px 8px;
-            border-radius: 4px;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            padding: 4px 10px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 12px;
             transition: all 0.2s ease;
@@ -226,17 +310,20 @@
 
         .action-btn:hover {
             background-color: #1e293b;
-            color: #cbd5e1;
+            color: #3b82f6;
+            border-color: #3b82f6;
         }
 
         .action-btn.active-like {
-            color: #22c55e;
-            background-color: rgba(34, 197, 94, 0.1);
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border-color: #10b981;
         }
 
         .action-btn.active-dislike {
+            background-color: rgba(239, 68, 68, 0.2);
             color: #ef4444;
-            background-color: rgba(239, 68, 68, 0.1);
+            border-color: #ef4444;
         }
 
         .t1t4-container {
@@ -290,7 +377,7 @@
             bottom: 0;
             width: 100%;
             background-color: #0e1117;
-            padding: 15px 15%;
+            padding: 15px 12%;
             display: flex;
             gap: 8px;
             border-top: 1px solid #1e293b;
@@ -302,7 +389,7 @@
             color: #ffffff;
             border: 1px solid #334155;
             border-radius: 8px;
-            padding: 10px 12px;
+            padding: 12px 16px;
             font-size: 15px;
             transition: border-color 0.2s ease;
         }
@@ -316,8 +403,8 @@
             background-color: transparent;
             border: 1px solid #334155;
             color: #64748b;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 8px;
             cursor: pointer;
             display: flex;
@@ -330,6 +417,15 @@
         .send-btn:hover:not(:disabled) {
             border-color: #3b82f6;
             color: #3b82f6;
+        }
+
+        .stage-badge {
+            font-size: 10px;
+            background: #334155;
+            color: #94a3b8;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -344,16 +440,43 @@
         </div>
 
         <div class="sidebar-section">
+            <p class="section-title">Filter by Framework Stage</p>
+            <div class="sidebar-buttons">
+                <button class="st-btn teach" onclick="selectStage('T1', this)">
+                    <span>📚 T1 — TEACH</span>
+                    <span class="stage-badge">Awareness</span>
+                </button>
+                <button class="st-btn test" onclick="selectStage('T2', this)">
+                    <span>🧪 T2 — TEST</span>
+                    <span class="stage-badge">Diagnose</span>
+                </button>
+                <button class="st-btn treat" onclick="selectStage('T3', this)">
+                    <span>💊 T3 — TREAT</span>
+                    <span class="stage-badge">Solution</span>
+                </button>
+                <button class="st-btn track" onclick="selectStage('T4', this)">
+                    <span>🎯 T4 — TRACK</span>
+                    <span class="stage-badge">Review</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <p class="section-title" id="faq-section-title">Featured FAQs</p>
+            <div class="faq-list" id="faq-list"></div>
+        </div>
+
+        <div class="sidebar-section">
             <p class="section-title">Quick Access</p>
             <div class="sidebar-buttons">
                 <button class="st-btn" onclick="handleFaqClick('What is myFinergy?')">📌 Getting Started</button>
                 <button class="st-btn" onclick="handleFaqClick('What is FinFit?')">💹 About FinFit</button>
-                <button class="st-btn" onclick="handleT1T4Framework()">📋 T1-T4 Framework</button>
+                <button class="st-btn" onclick="handleT1T4Framework()">📋 Overview Grid</button>
             </div>
         </div>
 
         <div class="sidebar-footer">
-            <button class="reset-btn" onclick="resetChat()">🔄 Reset Chat</button>
+            <button class="reset-btn" onclick="resetChat()">🔄 Reset Chat & Stage</button>
         </div>
     </div>
 
@@ -364,17 +487,12 @@
                     <div class="bot-bubble">
                         <div class="chat-text">👋 Welcome to myFinergy AI Copilot!
 
-I have 150+ FAQs about myFinergy. You can ask me anything or click the Quick Access buttons.
+I have FAQs about myFinergy organized across <b>T1 (Teach)</b>, <b>T2 (Test)</b>, <b>T3 (Treat)</b>, and <b>T4 (Track)</b> advisor frameworks.
 
-Try:
-• "hi" or "hello" for a greeting
-• "how to login" for portal credentials
-• Click any button for quick answers</div>
+Select a stage in the sidebar to view questions, or type your query directly below!</div>
                     </div>
                     <div class="message-actions">
                         <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
-                        <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
-                        <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
                     </div>
                 </div>
             </div>
@@ -387,36 +505,123 @@ Try:
     </div>
 
     <script>
-        // Replace with your production Render backend URL if needed (e.g., https://myfinergy-backend.onrender.com/chat)
-        const API_URL = "https://myfinergy-backend.onrender.com/chat";
+        const API_BASE = "http://127.0.0.1:8000";
+        let activeStage = null;
+        let lastUserQuery = "";
 
         const T1T4_FRAMEWORKS = [
-            { key: "teach", title: "TEACH", color: "teach", icon: "📚", subtitle: "Financial Literacy & Education", description: "Educate prospects on standard financial principles and baseline requirements before pitching." },
-            { key: "test", title: "TEST", color: "test", icon: "🧪", subtitle: "Financial Diagnostic & FinFit", description: "Run a complete diagnostic gap analysis to check total readiness for important goals." },
-            { key: "treat", title: "TREAT", color: "treat", icon: "💊", subtitle: "Actionable Goal-Based Solutions", description: "Provide specific financial remedies and product execution strategies tailored to gaps." },
-            { key: "track", title: "TRACK", color: "track", icon: "🎯", subtitle: "Ongoing Review & Monitoring", description: "Continuously review and adjust financial goals over time as client needs evolve." }
+            { key: "T1", title: "TEACH", color: "teach", icon: "📚", subtitle: "Financial Literacy & Education", description: "Educate prospects on standard financial principles and baseline requirements before pitching." },
+            { key: "T2", title: "TEST", color: "test", icon: "🧪", subtitle: "Financial Diagnostic & FinFit", description: "Run a complete diagnostic gap analysis to check total readiness for important goals." },
+            { key: "T3", title: "TREAT", color: "treat", icon: "💊", subtitle: "Actionable Goal-Based Solutions", description: "Provide specific financial remedies and product execution strategies tailored to gaps." },
+            { key: "T4", title: "TRACK", color: "track", icon: "🎯", subtitle: "Ongoing Review & Monitoring", description: "Continuously review and adjust financial goals over time as client needs evolve." }
         ];
 
-        // Query FastAPI backend endpoint
-        async function queryBackend(questionText) {
+        document.addEventListener("DOMContentLoaded", () => {
+            loadStageFaqs(null);
+        });
+
+        async function selectStage(stageKey, btnElement) {
+            if (activeStage === stageKey) {
+                activeStage = null;
+                document.querySelectorAll('.sidebar-buttons .st-btn').forEach(btn => btn.classList.remove('active-stage'));
+                appendBotHtml("Stage filter cleared. Searching across all framework stages.");
+                loadStageFaqs(null);
+            } else {
+                document.querySelectorAll('.sidebar-buttons .st-btn').forEach(btn => btn.classList.remove('active-stage'));
+                activeStage = stageKey;
+                btnElement.classList.add('active-stage');
+                loadStageFaqs(stageKey);
+                await displayStageQuestionsInChat(stageKey);
+            }
+        }
+
+        async function displayStageQuestionsInChat(stageKey) {
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ question: questionText })
+                const response = await fetch(`${API_BASE}/api/faqs?stage=${stageKey}`);
+                if (!response.ok) throw new Error("Failed to fetch questions");
+                const questions = await response.json();
+
+                const chatBody = document.getElementById('chat-body');
+                const row = document.createElement('div');
+                row.className = 'message-row bot';
+
+                const card = document.createElement('div');
+                card.className = 'stage-questions-card';
+
+                const title = document.createElement('div');
+                title.className = 'stage-questions-title';
+                title.innerHTML = `Loaded <b>${stageKey}</b> Questions (${questions.length} available):`;
+                card.appendChild(title);
+
+                const qList = document.createElement('div');
+                qList.className = 'stage-questions-list';
+
+                questions.slice(0, 6).forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'stage-q-btn';
+                    btn.innerText = "❓ " + item.question;
+                    btn.onclick = () => handleFaqClick(item.question);
+                    qList.appendChild(btn);
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
+                card.appendChild(qList);
+                row.appendChild(card);
+                chatBody.appendChild(row);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } catch (err) {
+                appendBotHtml(`Stage filter set to <b>${stageKey}</b>.`);
+            }
+        }
+
+        async function loadStageFaqs(stage) {
+            const faqList = document.getElementById('faq-list');
+            const faqTitle = document.getElementById('faq-section-title');
+            faqList.innerHTML = `<span style="font-size:12px; color:#64748b;">Loading FAQs...</span>`;
+            
+            faqTitle.innerText = stage ? `${stage} Recommended FAQs` : "Featured FAQs";
+
+            try {
+                const url = stage ? `${API_BASE}/api/faqs?stage=${stage}` : `${API_BASE}/api/faqs`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to load FAQs");
+                const faqs = await response.json();
+
+                faqList.innerHTML = "";
+                const displayFaqs = faqs.slice(0, 8);
+
+                if (displayFaqs.length === 0) {
+                    faqList.innerHTML = `<span style="font-size:12px; color:#64748b;">No FAQs found for ${stage}.</span>`;
+                    return;
                 }
 
+                displayFaqs.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'faq-item-btn';
+                    btn.innerText = item.question;
+                    btn.title = item.question;
+                    btn.onclick = () => handleFaqClick(item.question);
+                    faqList.appendChild(btn);
+                });
+            } catch (err) {
+                faqList.innerHTML = `<span style="font-size:12px; color:#ef4444;">Unable to load stage FAQs</span>`;
+            }
+        }
+
+        async function queryBackend(questionText) {
+            lastUserQuery = questionText;
+            try {
+                const response = await fetch(`${API_BASE}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: questionText, stage: activeStage })
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
                 const data = await response.json();
                 return data.answer || "No answer returned from server.";
             } catch (error) {
                 console.error("API Error:", error);
-                return "⚠️ Unable to connect to backend server. Ensure your backend service is running.";
+                return "⚠️ Unable to reach the backend server. Please verify your Python FastAPI server is running on http://127.0.0.1:8000.";
             }
         }
 
@@ -426,23 +631,18 @@ Try:
             typeBotMessage(answer);
         }
 
-        async function handleCardClick(frameworkKey, frameworkTitle) {
+        async function handleCardClick(stageKey, frameworkTitle) {
+            activeStage = stageKey;
             appendUserMessage(`Tell me about ${frameworkTitle}`);
-            const answer = await queryBackend(`What is ${frameworkTitle} in T1-T4 framework?`);
+            const answer = await queryBackend(`What is ${frameworkTitle}?`);
             typeBotMessage(answer);
         }
 
         function handleT1T4Framework() {
-            appendUserMessage("📋 T1-T4 Framework");
-            
+            appendUserMessage("📋 T1-T4 Framework Overview");
             const chatBody = document.getElementById('chat-body');
             const t1t4Container = document.createElement('div');
             t1t4Container.className = 't1t4-container';
-
-            const introBubble = document.createElement('div');
-            introBubble.className = 'bot-bubble';
-            introBubble.innerHTML = `<div class="chat-text">The <strong>T1-T4 Advisory Framework</strong> structures your entire advisory conversation:</div>`;
-            t1t4Container.appendChild(introBubble);
 
             const grid = document.createElement('div');
             grid.className = 't1t4-grid';
@@ -461,7 +661,6 @@ Try:
             });
 
             t1t4Container.appendChild(grid);
-
             const messageRow = document.createElement('div');
             messageRow.className = 'message-row bot';
             messageRow.appendChild(t1t4Container);
@@ -491,6 +690,15 @@ Try:
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
+        function appendBotHtml(htmlContent) {
+            const chatBody = document.getElementById('chat-body');
+            const botRow = document.createElement('div');
+            botRow.className = 'message-row bot';
+            botRow.innerHTML = `<div class="bot-container"><div class="bot-bubble"><div class="chat-text">${htmlContent}</div></div></div>`;
+            chatBody.appendChild(botRow);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
         function typeBotMessage(fullText) {
             const chatBody = document.getElementById('chat-body');
             const botRow = document.createElement('div');
@@ -498,7 +706,6 @@ Try:
 
             const botContainer = document.createElement('div');
             botContainer.className = 'bot-container';
-
             const botBubble = document.createElement('div');
             botBubble.className = 'bot-bubble';
 
@@ -511,113 +718,91 @@ Try:
             actionsDiv.className = 'message-actions';
             actionsDiv.innerHTML = `
                 <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
-                <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
-                <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
+                <button class="action-btn" onclick="submitFeedback(this, 'like')">👍 Like</button>
+                <button class="action-btn" onclick="submitFeedback(this, 'dislike')">👎 Dislike</button>
             `;
             botContainer.appendChild(actionsDiv);
             botRow.appendChild(botContainer);
             chatBody.appendChild(botRow);
 
             let index = 0;
-            const speed = 12;
-
             function typeChar() {
                 if (index < fullText.length) {
                     chatText.innerText += fullText.charAt(index);
                     index++;
                     chatBody.scrollTop = chatBody.scrollHeight;
-                    setTimeout(typeChar, speed);
+                    setTimeout(typeChar, 6);
                 }
             }
-
             typeChar();
         }
 
         function copyMessage(btnElement) {
             const botContainer = btnElement.closest('.bot-container');
             const textToCopy = botContainer.querySelector('.chat-text').innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                btnElement.innerHTML = '✅ Copied!';
+                setTimeout(() => btnElement.innerHTML = '📋 Copy', 2000);
+            });
+        }
 
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showCopyFeedback(btnElement);
-                }).catch(() => fallbackCopy(textToCopy, btnElement));
-            } else {
-                fallbackCopy(textToCopy, btnElement);
+        async function submitFeedback(btnElement, type) {
+            const botContainer = btnElement.closest('.bot-container');
+            const answerText = botContainer.querySelector('.chat-text').innerText;
+            const parentRow = botContainer.closest('.message-row');
+            
+            let questionText = lastUserQuery || "Direct Interaction";
+            let prev = parentRow.previousElementSibling;
+            while (prev) {
+                if (prev.classList.contains('user')) {
+                    questionText = prev.querySelector('.chat-text').innerText;
+                    break;
+                }
+                prev = prev.previousElementSibling;
             }
-        }
 
-        function fallbackCopy(text, btnElement) {
-            const tempTextArea = document.createElement('textarea');
-            tempTextArea.value = text;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempTextArea);
-            showCopyFeedback(btnElement);
-        }
+            const likeBtn = botContainer.querySelector('.action-btn:nth-child(2)');
+            const dislikeBtn = botContainer.querySelector('.action-btn:nth-child(3)');
 
-        function showCopyFeedback(btnElement) {
-            const originalText = btnElement.innerHTML;
-            btnElement.innerHTML = '✅ Copied!';
-            setTimeout(() => {
-                btnElement.innerHTML = originalText;
-            }, 2000);
-        }
+            if (type === 'like') {
+                likeBtn.classList.add('active-like');
+                dislikeBtn.classList.remove('active-dislike');
+            } else {
+                dislikeBtn.classList.add('active-dislike');
+                likeBtn.classList.remove('active-like');
+            }
 
-        function handleReaction(btnElement, reactionType) {
-            const parentActions = btnElement.closest('.message-actions');
-            const likeBtn = parentActions.children[1];
-            const dislikeBtn = parentActions.children[2];
-
-            if (reactionType === 'like') {
-                if (likeBtn.classList.contains('active-like')) {
-                    likeBtn.classList.remove('active-like');
-                } else {
-                    likeBtn.classList.add('active-like');
-                    dislikeBtn.classList.remove('active-dislike');
-                }
-            } else if (reactionType === 'dislike') {
-                if (dislikeBtn.classList.contains('active-dislike')) {
-                    dislikeBtn.classList.remove('active-dislike');
-                } else {
-                    dislikeBtn.classList.add('active-dislike');
-                    likeBtn.classList.remove('active-like');
-                }
+            try {
+                await fetch(`${API_BASE}/feedback`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: questionText,
+                        answer: answerText,
+                        feedback: type
+                    })
+                });
+            } catch (err) {
+                console.error("Feedback logging error:", err);
             }
         }
 
         function resetChat() {
-            const chatBody = document.getElementById('chat-body');
-            chatBody.innerHTML = `
+            activeStage = null;
+            document.querySelectorAll('.sidebar-buttons .st-btn').forEach(btn => btn.classList.remove('active-stage'));
+            document.getElementById('chat-body').innerHTML = `
                 <div class="message-row bot">
                     <div class="bot-container">
                         <div class="bot-bubble">
-                            <div class="chat-text">👋 Welcome to myFinergy AI Copilot!
-
-I have 150+ FAQs about myFinergy. You can ask me anything or click the Quick Access buttons.
-
-Try:
-• "hi" or "hello" for a greeting
-• "how to login" for portal credentials
-• Click any button for quick answers</div>
-                        </div>
-                        <div class="message-actions">
-                            <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
-                            <button class="action-btn" onclick="handleReaction(this, 'like')">👍</button>
-                            <button class="action-btn" onclick="handleReaction(this, 'dislike')">👎</button>
+                            <div class="chat-text">👋 Chat history cleared and stage filter reset. Select a stage or ask any question!</div>
                         </div>
                     </div>
-                </div>
-            `;
+                </div>`;
+            loadStageFaqs(null);
         }
 
         function escapeHtml(text) {
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
     </script>
 </body>
