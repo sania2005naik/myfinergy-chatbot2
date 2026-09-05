@@ -2,43 +2,20 @@ import os
 import re
 import csv
 import json
-import gc
 from datetime import datetime
 from contextlib import asynccontextmanager
 from typing import Optional
 
 import numpy as np
-
-# Force single-threaded CPU execution to minimize memory footprints
-os.environ["OMP_NUM_THREADS"] = "1"
-os.environ["MKL_NUM_THREADS"] = "1"
-os.environ["OPENBLAS_NUM_THREADS"] = "1"
-os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
-os.environ["NUMEXPR_NUM_THREADS"] = "1"
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from tokenizers import Tokenizer
-import onnxruntime as ort
-from huggingface_hub import hf_hub_download
 
-# ---------------------------------------------------------------------------
-# Config
-# ---------------------------------------------------------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 QA_DB_PATH = os.path.join(BASE_DIR, "qa_database.json")
 EMBEDDINGS_CACHE_PATH = os.path.join(BASE_DIR, "qa_embeddings.npy")
-EMBEDDINGS_CACHE_META_PATH = os.path.join(BASE_DIR, "qa_embeddings_meta.json")
 UNANSWERED_LOG_PATH = os.path.join(BASE_DIR, "unanswered_questions_log.csv")
 FEEDBACK_LOG_PATH = os.path.join(BASE_DIR, "feedback_log.csv")
-
-MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-
-SIMILARITY_THRESHOLD = 0.55
-LOW_CONFIDENCE_THRESHOLD = 0.68
 
 STAGE_MAPPING = {
     "T1": ["T1", "TEACH"],
@@ -66,32 +43,24 @@ FALLBACK_ANSWER = (
     "I've logged this question so it can be added to the database."
 )
 
-
 class ChatRequest(BaseModel):
     question: str
     stage: Optional[str] = None
-
 
 class FeedbackRequest(BaseModel):
     question: str
     answer: str
     feedback: str
 
-
 _qa_pairs: list[dict] = []
 _qa_embeddings: np.ndarray | None = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
-_tokenizer: Tokenizer | None = None
-_session: ort.InferenceSession | None = None
-
 
 def _normalize(text: str) -> str:
     text = text.strip().lower()
     text = re.sub(r"[^\w\s]", "", text)
-    text = re.sub(r"\s+", " ", text)
-    return text
-
+    return re.sub(r"\s+", " ", text)
 
 def _load_qa_database() -> list[dict]:
     with open(QA_DB_PATH, "r", encoding="utf-8") as f:
@@ -103,7 +72,6 @@ def _load_qa_database() -> list[dict]:
                 break
     return [item for item in data if isinstance(item, dict) and "question" in item]
 
-
 def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
     rows = []
     for p in qa_pairs:
@@ -112,104 +80,17 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
             rows.append((alt, p))
     return rows
 
-
-def _generate_embeddings(texts: list[str]) -> np.ndarray:
-    """
-    Lightweight embedding generation using Rust tokenizers + ONNX Runtime.
-    """
-    global _tokenizer, _session
-
-    # Enable truncation and padding on the Rust tokenizer object
-    _tokenizer.enable_truncation(max_length=128)
-    _tokenizer.enable_padding(length=None)
-
-    encoded_list = _tokenizer.encode_batch(texts)
-    
-    input_ids = np.array([e.ids for e in encoded_list], dtype=np.int64)
-    attention_mask = np.array([e.attention_mask for e in encoded_list], dtype=np.int64)
-    token_type_ids = np.array([e.type_ids for e in encoded_list], dtype=np.int64)
-
-    onnx_inputs = {
-        "input_ids": input_ids,
-        "attention_mask": attention_mask,
-        "token_type_ids": token_type_ids,
-    }
-
-    outputs = _session.run(None, onnx_inputs)
-    token_embeddings = outputs[0]
-
-    # Mean Pooling
-    mask_expanded = np.expand_dims(attention_mask, axis=-1)
-    input_mask_expanded = np.broadcast_to(mask_expanded, token_embeddings.shape)
-    sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
-    sum_mask = np.clip(input_mask_expanded.sum(axis=1), a_min=1e-9, a_max=None)
-    embeddings = sum_embeddings / sum_mask
-
-    # L2 Normalization
-    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
-    norms = np.clip(norms, a_min=1e-9, a_max=None)
-    normalized = embeddings / norms
-
-    gc.collect()
-    return normalized.astype(np.float32)
-
-
-def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
-    texts = [text for text, _ in rows]
-    fingerprint = {
-        "count": len(texts),
-        "texts_hash": hash(tuple(texts)),
-        "model": MODEL_NAME,
-    }
-
-    if os.path.exists(EMBEDDINGS_CACHE_PATH) and os.path.exists(EMBEDDINGS_CACHE_META_PATH):
-        try:
-            with open(EMBEDDINGS_CACHE_META_PATH, "r", encoding="utf-8") as f:
-                cached_meta = json.load(f)
-            if cached_meta == fingerprint:
-                return np.load(EMBEDDINGS_CACHE_PATH)
-        except Exception:
-            pass
-
-    embeddings = _generate_embeddings(texts)
-
-    np.save(EMBEDDINGS_CACHE_PATH, embeddings)
-    with open(EMBEDDINGS_CACHE_META_PATH, "w", encoding="utf-8") as f:
-        json.dump(fingerprint, f)
-
-    return embeddings
-
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows, _tokenizer, _session
-
-    # Download tokenizer.json directly from HF Hub
-    tokenizer_file = hf_hub_download(repo_id=MODEL_NAME, filename="tokenizer.json")
-    _tokenizer = Tokenizer.from_file(tokenizer_file)
-
-    # Download ONNX weights directly
-    model_path = hf_hub_download(repo_id=MODEL_NAME, filename="onnx/model.onnx")
-
-    opts = ort.SessionOptions()
-    opts.intra_op_num_threads = 1
-    opts.inter_op_num_threads = 1
-    opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
-    opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
-    
-    _session = ort.InferenceSession(model_path, sess_options=opts, providers=["CPUExecutionProvider"])
-
+    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows
     _qa_pairs = _load_qa_database()
     _qa_rows = _expand_with_alt_questions(_qa_pairs)
-    _qa_embeddings = _build_or_load_embeddings(_qa_rows)
+    
+    if os.path.exists(EMBEDDINGS_CACHE_PATH):
+        _qa_embeddings = np.load(EMBEDDINGS_CACHE_PATH)
 
-    _exact_match_index = {}
-    for text, pair in _qa_rows:
-        _exact_match_index[_normalize(text)] = pair
-
-    print(f"Loaded {len(_qa_pairs)} Q&A pairs via Rust Tokenizer + ONNX Runtime.")
+    _exact_match_index = {_normalize(text): pair for text, pair in _qa_rows}
     yield
-
 
 app = FastAPI(title="MyFinergy Chatbot API", lifespan=lifespan)
 
@@ -221,27 +102,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 def _matches_stage(item_stage, target_stage: str) -> bool:
     if not item_stage or not target_stage:
         return False
     item_s = str(item_stage).upper().strip()
     target_s = str(target_stage).upper().strip()
-    valid_matches = STAGE_MAPPING.get(target_s, [target_s])
-    return item_s in valid_matches
+    return item_s in STAGE_MAPPING.get(target_s, [target_s])
 
-
-def _log_unanswered(question: str, best_match: str, score: float):
+def _log_unanswered(question: str):
     file_exists = os.path.exists(UNANSWERED_LOG_PATH)
     with open(UNANSWERED_LOG_PATH, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(["Timestamp", "Question", "ClosestMatch", "Score"])
-        writer.writerow([
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            question, best_match, f"{score:.3f}",
-        ])
-
+            writer.writerow(["Timestamp", "Question"])
+        writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), question])
 
 def find_answer(user_question: str) -> dict:
     normalized = _normalize(user_question)
@@ -255,30 +129,36 @@ def find_answer(user_question: str) -> dict:
         return {"answer": exact["answer"], "matched_question": exact["question"],
                 "stage": exact.get("stage"), "score": 1.0, "match_type": "exact"}
 
-    query_embedding = _generate_embeddings([user_question])[0]
-    scores = _qa_embeddings @ query_embedding
-    best_idx = int(np.argmax(scores))
-    best_score = float(scores[best_idx])
-    best_phrasing, best_pair = _qa_rows[best_idx]
+    # Word overlap fallback matching without ONNX
+    words = set(normalized.split())
+    best_score = 0.0
+    best_pair = None
 
-    if best_score >= SIMILARITY_THRESHOLD:
+    for text, pair in _qa_rows:
+        target_words = set(_normalize(text).split())
+        if not target_words:
+            continue
+        score = len(words & target_words) / len(words | target_words)
+        if score > best_score:
+            best_score = score
+            best_pair = pair
+
+    if best_score >= 0.35 and best_pair:
         return {
             "answer": best_pair["answer"],
             "matched_question": best_pair["question"],
             "stage": best_pair.get("stage"),
-            "score": best_score,
-            "match_type": "semantic" if best_score >= LOW_CONFIDENCE_THRESHOLD else "semantic_low_confidence",
+            "score": round(best_score, 3),
+            "match_type": "text_overlap",
         }
 
-    _log_unanswered(user_question, best_phrasing, best_score)
+    _log_unanswered(user_question)
     return {"answer": FALLBACK_ANSWER, "matched_question": None,
-            "stage": None, "score": best_score, "match_type": "none"}
-
+            "stage": None, "score": 0.0, "match_type": "none"}
 
 @app.get("/")
 def read_root():
     return {"message": "MyFinergy Chatbot API is running", "qa_pairs_loaded": len(_qa_pairs)}
-
 
 @app.get("/api/faqs")
 @app.get("/faqs")
@@ -287,23 +167,20 @@ def get_faqs_by_stage(stage: Optional[str] = Query(None)):
         return [p for p in _qa_pairs if _matches_stage(p.get("stage"), stage)]
     return _qa_pairs
 
-
 @app.post("/api/chat")
 @app.post("/chat")
 def chat_endpoint(request: ChatRequest):
     user_query = request.question.strip()
     if not user_query:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
-
     result = find_answer(user_query)
     return {
         "answer": result["answer"],
         "matched_question": result["matched_question"],
         "stage": result["stage"],
-        "confidence": round(result["score"], 3),
+        "confidence": result["score"],
         "match_type": result["match_type"],
     }
-
 
 @app.post("/api/feedback")
 @app.post("/feedback")
@@ -321,7 +198,6 @@ def receive_feedback(data: FeedbackRequest):
         return {"status": "success", "message": "Feedback recorded successfully."}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to record feedback: {str(e)}")
-
 
 @app.get("/api/qa-count")
 @app.get("/qa-count")
