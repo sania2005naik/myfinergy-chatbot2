@@ -610,7 +610,7 @@ Select a stage in the sidebar to view questions, or type your query directly bel
         async function queryBackend(questionText) {
             lastUserQuery = questionText;
             try {
-                const response = await fetch(`${API_BASE}/chat`, {
+                const response = await fetch(`${API_BASE}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ question: questionText, stage: activeStage })
@@ -621,7 +621,7 @@ Select a stage in the sidebar to view questions, or type your query directly bel
                 return data.answer || "No answer returned from server.";
             } catch (error) {
                 console.error("API Error:", error);
-                return "⚠️ Unable to reach the backend server. Please verify your Python FastAPI server is running on http://127.0.0.1:8000.";
+                return "⚠️ Unable to reach the backend service. If using Render's free tier, the server may be spinning up after inactivity (takes ~30 seconds). Please try again shortly.";
             }
         }
 
@@ -773,7 +773,7 @@ Select a stage in the sidebar to view questions, or type your query directly bel
             }
 
             try {
-                await fetch(`${API_BASE}/feedback`, {
+                await fetch(`${API_BASE}/api/feedback`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
