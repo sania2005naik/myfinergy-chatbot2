@@ -9,6 +9,7 @@ from typing import Optional
 
 import numpy as np
 
+# Single-threaded configuration for lightweight CPU execution
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
@@ -18,30 +19,24 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
 os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
 
-import torch
-torch.set_num_threads(1)
-
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
+from transformers import AutoTokenizer
+from optimum.onnxruntime import ORTModelForFeatureExtraction
 
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Fixed filename -- NOT auto-detected. Auto-detecting "whichever .json file
-# is first in the folder" is fragile: if more than one .json file exists
-# (backups, old versions, etc.) it can silently load the wrong database.
 QA_DB_PATH = os.path.join(BASE_DIR, "qa_database.json")
-
 EMBEDDINGS_CACHE_PATH = os.path.join(BASE_DIR, "qa_embeddings.npy")
 EMBEDDINGS_CACHE_META_PATH = os.path.join(BASE_DIR, "qa_embeddings_meta.json")
 UNANSWERED_LOG_PATH = os.path.join(BASE_DIR, "unanswered_questions_log.csv")
 FEEDBACK_LOG_PATH = os.path.join(BASE_DIR, "feedback_log.csv")
 
-MODEL_NAME = "all-MiniLM-L6-v2"
+MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Tuned and tested against real advisor rephrasings earlier in this project.
 SIMILARITY_THRESHOLD = 0.55
@@ -89,7 +84,8 @@ _qa_pairs: list[dict] = []
 _qa_embeddings: np.ndarray | None = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
-_model: SentenceTransformer | None = None
+_tokenizer: AutoTokenizer | None = None
+_model: ORTModelForFeatureExtraction | None = None
 
 
 def _normalize(text: str) -> str:
@@ -124,19 +120,36 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
-    global _model
-    with torch.no_grad():
-        embeddings = _model.encode(
-            texts,
-            convert_to_numpy=True,
-            normalize_embeddings=True,
-            show_progress_bar=False,
-            batch_size=16,
-        )
-    if len(embeddings.shape) == 1:
-        embeddings = np.expand_dims(embeddings, axis=0)
+    """
+    Mean-pooled, L2-normalized embedding extraction matching
+    all-MiniLM-L6-v2 using ONNX Runtime.
+    """
+    global _tokenizer, _model
+
+    encoded = _tokenizer(
+        texts,
+        padding=True,
+        truncation=True,
+        return_tensors="np"
+    )
+
+    outputs = _model(**encoded)
+    token_embeddings = outputs.last_hidden_state  # (batch_size, seq_len, hidden_dim)
+    attention_mask = np.expand_dims(encoded["attention_mask"], axis=-1)
+
+    # Mean pooling over attention mask
+    input_mask_expanded = np.broadcast_to(attention_mask, token_embeddings.shape)
+    sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
+    sum_mask = np.clip(input_mask_expanded.sum(axis=1), a_min=1e-9, a_max=None)
+    embeddings = sum_embeddings / sum_mask
+
+    # L2 normalization
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    norms = np.clip(norms, a_min=1e-9, a_max=None)
+    normalized = embeddings / norms
+
     gc.collect()
-    return embeddings.astype(np.float32)
+    return normalized.astype(np.float32)
 
 
 def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
@@ -167,15 +180,11 @@ def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows, _model
+    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows, _tokenizer, _model
 
-    # NOTE: deliberately NOT forcing HF_HUB_OFFLINE/TRANSFORMERS_OFFLINE here.
-    # Those only work if the model is already cached locally; forcing them
-    # unconditionally breaks the very first run on a fresh machine. If you
-    # want fully offline operation after the first successful run, set
-    # HF_HUB_OFFLINE=1 as an actual environment variable when launching
-    # uvicorn, not hardcoded in the script.
-    _model = SentenceTransformer(MODEL_NAME, device="cpu")
+    # Lightweight ONNX model initialization
+    _tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    _model = ORTModelForFeatureExtraction.from_pretrained(MODEL_NAME, export=True)
 
     _qa_pairs = _load_qa_database()
     _qa_rows = _expand_with_alt_questions(_qa_pairs)
@@ -185,7 +194,7 @@ async def lifespan(app: FastAPI):
     for text, pair in _qa_rows:
         _exact_match_index[_normalize(text)] = pair
 
-    print(f"Loaded {len(_qa_pairs)} Q&A pairs ({len(_qa_rows)} phrasings incl. alt_questions) and embeddings ({_qa_embeddings.shape}).")
+    print(f"Loaded {len(_qa_pairs)} Q&A pairs ({len(_qa_rows)} phrasings incl. alt_questions) and embeddings ({_qa_embeddings.shape}) via ONNX.")
     yield
 
 
@@ -206,7 +215,7 @@ def _matches_stage(item_stage, target_stage: str) -> bool:
     item_s = str(item_stage).upper().strip()
     target_s = str(target_stage).upper().strip()
     valid_matches = STAGE_MAPPING.get(target_s, [target_s])
-    return item_s in valid_matches  # exact match against known aliases, not loose substring
+    return item_s in valid_matches
 
 
 def _log_unanswered(question: str, best_match: str, score: float):
@@ -261,13 +270,6 @@ def read_root():
 @app.get("/api/faqs")
 @app.get("/faqs")
 def get_faqs_by_stage(stage: Optional[str] = Query(None)):
-    """
-    Supports both `/api/faqs` and `/faqs` routes.
-    No 'stage' -> all Q&A pairs. 'stage' (T1/T2/T3/T4) -> only that stage's
-    real, tagged questions. No arbitrary fallback slicing -- if a stage
-    genuinely has no tagged questions, it returns an empty list rather than
-    guessing with unrelated content.
-    """
     if stage:
         return [p for p in _qa_pairs if _matches_stage(p.get("stage"), stage)]
     return _qa_pairs
