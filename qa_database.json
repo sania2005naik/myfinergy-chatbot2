@@ -1951,6 +1951,7 @@
     "id": "qa_151",
     "category": "Getting Started",
     "question": "What is the T1, T2, T3, T4 framework?",
+    "answer": "T1 (Teach) – educate the prospect and create financial awareness. T2 (Test) – conduct the financial assessment. T3 (Treat) – identify the gap and recommend appropriate action. T4 (Track) – continue monitoring, follow-up and client engagement.",
     "alt_questions": [
       "Explain the T1 T2 T3 T4 stages",
       "Can you walk me through T1 to T4?",
@@ -1959,7 +1960,6 @@
       "What does T3 (Treat) stand for in the framework?",
       "What does T4 (Track) stand for in the framework?"
     ],
-    "answer": "T1 (Teach) – educate the prospect and create financial awareness. T2 (Test) – conduct the financial assessment. T3 (Treat) – identify the gap and recommend appropriate action. T4 (Track) – continue monitoring, follow-up and client engagement.",
     "stage": null,
     "subcategory": null
   },

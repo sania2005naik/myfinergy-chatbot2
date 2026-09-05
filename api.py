@@ -53,7 +53,7 @@ class FeedbackRequest(BaseModel):
     feedback: str
 
 _qa_pairs: list[dict] = []
-_qa_embeddings: np.ndarray | None = None
+_qa_embeddings: Optional[np.ndarray] = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
 
@@ -63,6 +63,8 @@ def _normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text)
 
 def _load_qa_database() -> list[dict]:
+    if not os.path.exists(QA_DB_PATH):
+        return []
     with open(QA_DB_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
     if isinstance(data, dict):
@@ -87,7 +89,10 @@ async def lifespan(app: FastAPI):
     _qa_rows = _expand_with_alt_questions(_qa_pairs)
     
     if os.path.exists(EMBEDDINGS_CACHE_PATH):
-        _qa_embeddings = np.load(EMBEDDINGS_CACHE_PATH)
+        try:
+            _qa_embeddings = np.load(EMBEDDINGS_CACHE_PATH)
+        except Exception:
+            _qa_embeddings = None
 
     _exact_match_index = {_normalize(text): pair for text, pair in _qa_rows}
     yield
@@ -117,28 +122,46 @@ def _log_unanswered(question: str):
             writer.writerow(["Timestamp", "Question"])
         writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), question])
 
-def find_answer(user_question: str) -> dict:
+def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
     normalized = _normalize(user_question)
 
     if normalized in START_PHRASES:
-        return {"answer": START_ANSWER, "matched_question": "Getting Started / Overview",
-                "stage": None, "score": 1.0, "match_type": "intent_start"}
+        return {
+            "answer": START_ANSWER, 
+            "matched_question": "Getting Started / Overview",
+            "stage": None, 
+            "score": 1.0, 
+            "match_type": "intent_start"
+        }
 
+    # 1. Exact Match Check
     exact = _exact_match_index.get(normalized)
     if exact:
-        return {"answer": exact["answer"], "matched_question": exact["question"],
-                "stage": exact.get("stage"), "score": 1.0, "match_type": "exact"}
+        if not stage or _matches_stage(exact.get("stage"), stage):
+            return {
+                "answer": exact["answer"], 
+                "matched_question": exact["question"],
+                "stage": exact.get("stage"), 
+                "score": 1.0, 
+                "match_type": "exact"
+            }
 
-    # Word overlap fallback matching without ONNX
+    # 2. Word Overlap Similarity Fallback
     words = set(normalized.split())
     best_score = 0.0
     best_pair = None
 
     for text, pair in _qa_rows:
+        if stage and not _matches_stage(pair.get("stage"), stage):
+            continue
         target_words = set(_normalize(text).split())
         if not target_words:
             continue
-        score = len(words & target_words) / len(words | target_words)
+        
+        intersection = len(words & target_words)
+        union = len(words | target_words)
+        score = intersection / union if union > 0 else 0.0
+        
         if score > best_score:
             best_score = score
             best_pair = pair
@@ -152,9 +175,15 @@ def find_answer(user_question: str) -> dict:
             "match_type": "text_overlap",
         }
 
+    # Log unanswered queries
     _log_unanswered(user_question)
-    return {"answer": FALLBACK_ANSWER, "matched_question": None,
-            "stage": None, "score": 0.0, "match_type": "none"}
+    return {
+        "answer": FALLBACK_ANSWER, 
+        "matched_question": None,
+        "stage": None, 
+        "score": 0.0, 
+        "match_type": "none"
+    }
 
 @app.get("/")
 def read_root():
@@ -173,7 +202,8 @@ def chat_endpoint(request: ChatRequest):
     user_query = request.question.strip()
     if not user_query:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
-    result = find_answer(user_query)
+    
+    result = find_answer(user_query, stage=request.stage)
     return {
         "answer": result["answer"],
         "matched_question": result["matched_question"],
