@@ -9,6 +9,8 @@ from typing import Optional
 import numpy as np
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -16,6 +18,7 @@ QA_DB_PATH = os.path.join(BASE_DIR, "qa_database.json")
 EMBEDDINGS_CACHE_PATH = os.path.join(BASE_DIR, "qa_embeddings.npy")
 UNANSWERED_LOG_PATH = os.path.join(BASE_DIR, "unanswered_questions_log.csv")
 FEEDBACK_LOG_PATH = os.path.join(BASE_DIR, "feedback_log.csv")
+LOGO_PATH = os.path.join(BASE_DIR, "logo.png")
 
 STAGE_MAPPING = {
     "T1": ["T1", "TEACH"],
@@ -134,7 +137,20 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
             "match_type": "intent_start"
         }
 
-    # 1. Exact Match Check
+    # 1. Direct Stage Button Match Handling
+    for stage_code, names in STAGE_MAPPING.items():
+        if normalized in [_normalize(n) for n in names] or normalized in [_normalize(f"tell me about {n}") for n in names]:
+            for p in _qa_pairs:
+                if _matches_stage(p.get("stage"), stage_code):
+                    return {
+                        "answer": p["answer"],
+                        "matched_question": p["question"],
+                        "stage": p.get("stage"),
+                        "score": 1.0,
+                        "match_type": "exact_stage_button"
+                    }
+
+    # 2. Exact Match Check
     exact = _exact_match_index.get(normalized)
     if exact:
         if not stage or _matches_stage(exact.get("stage"), stage):
@@ -146,7 +162,7 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
                 "match_type": "exact"
             }
 
-    # 2. Word Overlap Similarity Fallback
+    # 3. Word Overlap Similarity Fallback
     words = set(normalized.split())
     best_score = 0.0
     best_pair = None
@@ -184,6 +200,13 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
         "score": 0.0, 
         "match_type": "none"
     }
+
+# Endpoint to directly serve logo image
+@app.get("/logo.png")
+def get_logo():
+    if os.path.exists(LOGO_PATH):
+        return FileResponse(LOGO_PATH, media_type="image/png")
+    raise HTTPException(status_code=404, detail="Logo not found")
 
 @app.get("/")
 def read_root():
