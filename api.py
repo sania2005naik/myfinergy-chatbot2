@@ -259,8 +259,10 @@ def read_root():
 
 
 @app.get("/api/faqs")
+@app.get("/faqs")
 def get_faqs_by_stage(stage: Optional[str] = Query(None)):
     """
+    Supports both `/api/faqs` and `/faqs` routes.
     No 'stage' -> all Q&A pairs. 'stage' (T1/T2/T3/T4) -> only that stage's
     real, tagged questions. No arbitrary fallback slicing -- if a stage
     genuinely has no tagged questions, it returns an empty list rather than
@@ -271,6 +273,7 @@ def get_faqs_by_stage(stage: Optional[str] = Query(None)):
     return _qa_pairs
 
 
+@app.post("/api/chat")
 @app.post("/chat")
 def chat_endpoint(request: ChatRequest):
     user_query = request.question.strip()
@@ -287,6 +290,7 @@ def chat_endpoint(request: ChatRequest):
     }
 
 
+@app.post("/api/feedback")
 @app.post("/feedback")
 def receive_feedback(data: FeedbackRequest):
     try:
@@ -304,6 +308,7 @@ def receive_feedback(data: FeedbackRequest):
         raise HTTPException(status_code=500, detail=f"Failed to record feedback: {str(e)}")
 
 
+@app.get("/api/qa-count")
 @app.get("/qa-count")
 def qa_count():
     return {"count": len(_qa_pairs)}
