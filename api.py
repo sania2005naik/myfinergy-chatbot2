@@ -9,20 +9,18 @@ from typing import Optional
 
 import numpy as np
 
-# Single-threaded configuration for lightweight CPU execution
+# Force single-threaded CPU execution to minimize memory footprints
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
-os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "1"
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from transformers import AutoTokenizer
+from tokenizers import Tokenizer
 import onnxruntime as ort
 from huggingface_hub import hf_hub_download
 
@@ -84,7 +82,7 @@ _qa_pairs: list[dict] = []
 _qa_embeddings: np.ndarray | None = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
-_tokenizer: AutoTokenizer | None = None
+_tokenizer: Tokenizer | None = None
 _session: ort.InferenceSession | None = None
 
 
@@ -117,34 +115,37 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
 
 def _generate_embeddings(texts: list[str]) -> np.ndarray:
     """
-    Mean-pooled, L2-normalized embedding extraction matching
-    all-MiniLM-L6-v2 using native ONNX Runtime without PyTorch.
+    Lightweight embedding generation using Rust tokenizers + ONNX Runtime.
     """
     global _tokenizer, _session
 
-    encoded = _tokenizer(
-        texts,
-        padding=True,
-        truncation=True,
-        return_tensors="np"
-    )
+    # Enable truncation and padding on the Rust tokenizer object
+    _tokenizer.enable_truncation(max_length=128)
+    _tokenizer.enable_padding(length=None)
+
+    encoded_list = _tokenizer.encode_batch(texts)
+    
+    input_ids = np.array([e.ids for e in encoded_list], dtype=np.int64)
+    attention_mask = np.array([e.attention_mask for e in encoded_list], dtype=np.int64)
+    token_type_ids = np.array([e.type_ids for e in encoded_list], dtype=np.int64)
 
     onnx_inputs = {
-        "input_ids": encoded["input_ids"].astype(np.int64),
-        "attention_mask": encoded["attention_mask"].astype(np.int64),
+        "input_ids": input_ids,
+        "attention_mask": attention_mask,
+        "token_type_ids": token_type_ids,
     }
-    if "token_type_ids" in encoded:
-        onnx_inputs["token_type_ids"] = encoded["token_type_ids"].astype(np.int64)
 
     outputs = _session.run(None, onnx_inputs)
-    token_embeddings = outputs[0]  # (batch_size, seq_len, hidden_dim)
+    token_embeddings = outputs[0]
 
-    attention_mask = np.expand_dims(encoded["attention_mask"], axis=-1)
-    input_mask_expanded = np.broadcast_to(attention_mask, token_embeddings.shape)
+    # Mean Pooling
+    mask_expanded = np.expand_dims(attention_mask, axis=-1)
+    input_mask_expanded = np.broadcast_to(mask_expanded, token_embeddings.shape)
     sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
     sum_mask = np.clip(input_mask_expanded.sum(axis=1), a_min=1e-9, a_max=None)
     embeddings = sum_embeddings / sum_mask
 
+    # L2 Normalization
     norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     norms = np.clip(norms, a_min=1e-9, a_max=None)
     normalized = embeddings / norms
@@ -183,14 +184,19 @@ def _build_or_load_embeddings(rows: list[tuple[str, dict]]) -> np.ndarray:
 async def lifespan(app: FastAPI):
     global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows, _tokenizer, _session
 
-    _tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    
-    # Download ONNX model weights directly without pulling optimum/torch
+    # Download tokenizer.json directly from HF Hub
+    tokenizer_file = hf_hub_download(repo_id=MODEL_NAME, filename="tokenizer.json")
+    _tokenizer = Tokenizer.from_file(tokenizer_file)
+
+    # Download ONNX weights directly
     model_path = hf_hub_download(repo_id=MODEL_NAME, filename="onnx/model.onnx")
-    
+
     opts = ort.SessionOptions()
     opts.intra_op_num_threads = 1
     opts.inter_op_num_threads = 1
+    opts.execution_mode = ort.ExecutionMode.ORT_SEQUENTIAL
+    opts.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_BASIC
+    
     _session = ort.InferenceSession(model_path, sess_options=opts, providers=["CPUExecutionProvider"])
 
     _qa_pairs = _load_qa_database()
@@ -201,7 +207,7 @@ async def lifespan(app: FastAPI):
     for text, pair in _qa_rows:
         _exact_match_index[_normalize(text)] = pair
 
-    print(f"Loaded {len(_qa_pairs)} Q&A pairs ({len(_qa_rows)} phrasings) and embeddings ({_qa_embeddings.shape}) via pure ONNX Runtime.")
+    print(f"Loaded {len(_qa_pairs)} Q&A pairs via Rust Tokenizer + ONNX Runtime.")
     yield
 
 
