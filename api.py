@@ -1,25 +1,34 @@
 import os
 import re
-import csv
 import json
 from datetime import datetime
-from contextlib import asynccontextmanager
 from typing import Optional
+from contextlib import asynccontextmanager
 
 import numpy as np
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
+from pymongo import MongoClient
 
+# --- File Paths ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 QA_DB_PATH = os.path.join(BASE_DIR, "qa_database.json")
 EMBEDDINGS_CACHE_PATH = os.path.join(BASE_DIR, "qa_embeddings.npy")
-UNANSWERED_LOG_PATH = os.path.join(BASE_DIR, "unanswered_questions_log.csv")
-FEEDBACK_LOG_PATH = os.path.join(BASE_DIR, "feedback_log.csv")
 LOGO_PATH = os.path.join(BASE_DIR, "logo.png")
 
+# --- MongoDB Atlas Connection ---
+# Reads MONGO_URI set in Render environment variables
+MONGO_URI = os.getenv("MONGO_URI", "")
+client = MongoClient(MONGO_URI, maxPoolSize=5) if MONGO_URI else None
+db = client["myfinergy_db"] if client else None
+
+# Collections for cloud logging
+feedback_collection = db["feedback_logs"] if db is not None else None
+unanswered_collection = db["unanswered_questions"] if db is not None else None
+
+# --- Constants & Mappings ---
 STAGE_MAPPING = {
     "T1": ["T1", "TEACH"],
     "T2": ["T2", "TEST"],
@@ -46,6 +55,7 @@ FALLBACK_ANSWER = (
     "I've logged this question so it can be added to the database."
 )
 
+# --- Pydantic Models ---
 class ChatRequest(BaseModel):
     question: str
     stage: Optional[str] = None
@@ -55,11 +65,13 @@ class FeedbackRequest(BaseModel):
     answer: str
     feedback: str
 
+# --- Global State ---
 _qa_pairs: list[dict] = []
 _qa_embeddings: Optional[np.ndarray] = None
 _exact_match_index: dict[str, dict] = {}
 _qa_rows: list[tuple[str, dict]] = []
 
+# --- Helper Functions ---
 def _normalize(text: str) -> str:
     text = text.strip().lower()
     text = re.sub(r"[^\w\s]", "", text)
@@ -85,31 +97,6 @@ def _expand_with_alt_questions(qa_pairs: list[dict]) -> list[tuple[str, dict]]:
             rows.append((alt, p))
     return rows
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows
-    _qa_pairs = _load_qa_database()
-    _qa_rows = _expand_with_alt_questions(_qa_pairs)
-    
-    if os.path.exists(EMBEDDINGS_CACHE_PATH):
-        try:
-            _qa_embeddings = np.load(EMBEDDINGS_CACHE_PATH)
-        except Exception:
-            _qa_embeddings = None
-
-    _exact_match_index = {_normalize(text): pair for text, pair in _qa_rows}
-    yield
-
-app = FastAPI(title="MyFinergy Chatbot API", lifespan=lifespan)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 def _matches_stage(item_stage, target_stage: str) -> bool:
     if not item_stage or not target_stage:
         return False
@@ -117,14 +104,18 @@ def _matches_stage(item_stage, target_stage: str) -> bool:
     target_s = str(target_stage).upper().strip()
     return item_s in STAGE_MAPPING.get(target_s, [target_s])
 
+# --- Database Logging Function ---
 def _log_unanswered(question: str):
-    file_exists = os.path.exists(UNANSWERED_LOG_PATH)
-    with open(UNANSWERED_LOG_PATH, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(["Timestamp", "Question"])
-        writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), question])
+    if unanswered_collection is not None:
+        try:
+            unanswered_collection.insert_one({
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "question": question
+            })
+        except Exception as e:
+            print(f"Failed to log unanswered question to MongoDB: {str(e)}")
 
+# --- Core Matching Engine ---
 def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
     normalized = _normalize(user_question)
 
@@ -191,7 +182,7 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
             "match_type": "text_overlap",
         }
 
-    # Log unanswered queries
+    # Log unanswered queries to MongoDB Atlas
     _log_unanswered(user_question)
     return {
         "answer": FALLBACK_ANSWER, 
@@ -201,7 +192,34 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
         "match_type": "none"
     }
 
-# Endpoint to directly serve logo image
+# --- Application Lifespan ---
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global _qa_pairs, _qa_embeddings, _exact_match_index, _qa_rows
+    _qa_pairs = _load_qa_database()
+    _qa_rows = _expand_with_alt_questions(_qa_pairs)
+    
+    if os.path.exists(EMBEDDINGS_CACHE_PATH):
+        try:
+            _qa_embeddings = np.load(EMBEDDINGS_CACHE_PATH)
+        except Exception:
+            _qa_embeddings = None
+
+    _exact_match_index = {_normalize(text): pair for text, pair in _qa_rows}
+    yield
+
+# --- FastAPI Initialization ---
+app = FastAPI(title="MyFinergy Chatbot API", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# --- Routes & Endpoints ---
 @app.get("/logo.png")
 def get_logo():
     if os.path.exists(LOGO_PATH):
@@ -238,19 +256,18 @@ def chat_endpoint(request: ChatRequest):
 @app.post("/api/feedback")
 @app.post("/feedback")
 def receive_feedback(data: FeedbackRequest):
-    try:
-        file_exists = os.path.exists(FEEDBACK_LOG_PATH)
-        with open(FEEDBACK_LOG_PATH, mode="a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            if not file_exists:
-                writer.writerow(["Timestamp", "Question", "Answer", "Feedback"])
-            writer.writerow([
-                datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                data.question, data.answer, data.feedback,
-            ])
-        return {"status": "success", "message": "Feedback recorded successfully."}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to record feedback: {str(e)}")
+    if feedback_collection is not None:
+        try:
+            feedback_collection.insert_one({
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "question": data.question,
+                "answer": data.answer,
+                "feedback": data.feedback,
+            })
+            return {"status": "success", "message": "Feedback recorded successfully."}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Failed to record feedback: {str(e)}")
+    return {"status": "success", "message": "Feedback endpoint reachable (database URI not set)."}
 
 @app.get("/api/qa-count")
 @app.get("/qa-count")

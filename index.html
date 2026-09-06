@@ -47,7 +47,6 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Fixed dark background for sidebar so logo remains clearly visible */
         .sidebar {
             width: 320px;
             background-color: #0b1329;
@@ -521,7 +520,7 @@
 <body>
     <div class="sidebar">
         <div class="logo-container">
-            <img src="https://myfinergy-backend.onrender.com/logo.png" alt="myFinergy Logo" width="150" />
+            <img src="logo.png" alt="myFinergy Logo" width="150" onerror="this.src='https://myfinergy-backend.onrender.com/logo.png'" />
             <div class="logo-text-wrapper">
                 <h1>myFinergy</h1>
                 <span class="sidebar-subtitle">AI Copilot</span>
@@ -579,12 +578,15 @@
 
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Ask any question..." onkeydown="if(event.key==='Enter') processUserQuery()">
-            <button class="send-btn" id="send-btn" onclick="processUserQuery()">↑</button>
+            <button class="send-btn" id="send-btn" aria-label="Send query" onclick="processUserQuery()">↑</button>
         </div>
     </div>
 
     <script>
-        const API_BASE = "https://myfinergy-backend.onrender.com";
+        const API_BASE = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+            ? "http://localhost:8000" 
+            : "https://myfinergy-backend.onrender.com";
+
         let activeStage = null;
         let lastUserQuery = "";
 
@@ -603,11 +605,7 @@
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const toggleBtn = document.getElementById('theme-toggle');
-            if (document.body.classList.contains('light-mode')) {
-                toggleBtn.innerText = '☀️ Light Mode';
-            } else {
-                toggleBtn.innerText = '🌙 Dark Mode';
-            }
+            toggleBtn.innerText = document.body.classList.contains('light-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
         }
 
         function renderInitialWelcomeMessage() {
@@ -647,7 +645,6 @@
             });
 
             t1t4Container.appendChild(grid);
-
             botBubble.appendChild(textDiv);
             botBubble.appendChild(t1t4Container);
             botContainer.appendChild(botBubble);
