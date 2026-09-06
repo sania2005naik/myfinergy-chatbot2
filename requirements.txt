@@ -3,3 +3,5 @@ uvicorn[standard]
 pydantic
 numpy
 python-multipart
+pymongo
+dnspython
