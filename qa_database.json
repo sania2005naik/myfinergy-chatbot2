@@ -2235,5 +2235,61 @@
     ],
     "stage": "T3",
     "subcategory": "Revenue"
+  },
+  {
+    "id": "qa_174",
+    "category": "Getting Started",
+    "question": "Tell me about T1 - TEACH",
+    "alt_questions": [
+      "What is T1 Teach?",
+      "Explain the T1 Teach stage",
+      "What happens in the Teach stage?",
+      "Tell me about the awareness stage"
+    ],
+    "answer": "T1 (Teach) is the awareness stage of the myFinergy advisor framework. The goal here is to educate the prospect and create financial awareness before any product discussion — using educational content, financial insights, and conversation starters to help the prospect recognize gaps in their financial planning. This positions you as a trusted financial fitness advisor rather than someone selling a product.",
+    "stage": "T1",
+    "subcategory": "Getting Started"
+  },
+  {
+    "id": "qa_175",
+    "category": "Test",
+    "question": "Tell me about T2 - TEST",
+    "alt_questions": [
+      "What is T2 Test?",
+      "Explain the T2 Test stage",
+      "What happens in the Test stage?",
+      "Tell me about the diagnose stage"
+    ],
+    "answer": "T2 (Test) is the diagnostic stage. The client completes the Financial Fitness Test, providing information about their income, goals, and existing financial commitments. This produces the Finergy Score, a simplified indicator of the client's financial readiness, which becomes the starting point for a structured, goal-based conversation.",
+    "stage": "T2",
+    "subcategory": "Test & Assessment"
+  },
+  {
+    "id": "qa_176",
+    "category": "Treatment",
+    "question": "Tell me about T3 - TREAT",
+    "alt_questions": [
+      "What is T3 Treat?",
+      "Explain the T3 Treat stage",
+      "What happens in the Treat stage?",
+      "Tell me about the solution stage"
+    ],
+    "answer": "T3 (Treat) is the solution stage. Based on the diagnostic results, you identify the client's financial gaps, prioritize which ones to address first, and recommend an appropriate action plan. A financial product may be part of that plan, but the recommendation always starts from the client's identified need rather than from a product pitch.",
+    "stage": "T3",
+    "subcategory": "Treatment"
+  },
+  {
+    "id": "qa_177",
+    "category": "Follow-Up",
+    "question": "Tell me about T4 - TRACK",
+    "alt_questions": [
+      "What is T4 Track?",
+      "Explain the T4 Track stage",
+      "What happens in the Track stage?",
+      "Tell me about the review stage"
+    ],
+    "answer": "T4 (Track) is the ongoing review stage. This covers following up with the client after the initial recommendation, monitoring their progress against goals over time, checking in when income or circumstances change, and using referrals and recurring engagement to grow the relationship long-term.",
+    "stage": "T4",
+    "subcategory": "Follow-Up"
   }
 ]
