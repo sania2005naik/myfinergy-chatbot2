@@ -767,8 +767,8 @@
         }
 
         async function handleCardClick(stageKey, frameworkTitle) {
-            const queryText = stageKey.toLowerCase();
-            appendUserMessage(`Tell me about ${stageKey} - ${frameworkTitle}`);
+            const queryText = `Tell me about ${stageKey} - ${frameworkTitle}`;
+            appendUserMessage(queryText);
             const answer = await queryBackend(queryText, stageKey);
             typeBotMessage(answer);
         }
