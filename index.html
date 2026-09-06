@@ -5,6 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>myFinergy AI Copilot</title>
     <style>
+        :root {
+            --bg-color: #0e1117;
+            --text-color: #ffffff;
+            --subtext-color: #94a3b8;
+            --border-color: #1e293b;
+            --card-bg: #1a202c;
+            --btn-bg: #1e293b;
+            --btn-border: #334155;
+            --btn-text: #cbd5e1;
+            --chat-bubble-bot: #1e293b;
+            --input-bg: #1e293b;
+        }
+
+        body.light-mode {
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --subtext-color: #475569;
+            --border-color: #cbd5e1;
+            --card-bg: #ffffff;
+            --btn-bg: #ffffff;
+            --btn-border: #cbd5e1;
+            --btn-text: #334155;
+            --chat-bubble-bot: #e2e8f0;
+            --input-bg: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,16 +39,19 @@
         }
 
         body {
-            background-color: #0e1117;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             height: 100vh;
             overflow: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* Fixed dark background for sidebar so logo remains clearly visible */
         .sidebar {
             width: 320px;
             background-color: #0b1329;
+            color: #ffffff;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -39,12 +68,6 @@
             align-items: center;    
             text-align: center;
             gap: 8px;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
         }
 
         .logo-text-wrapper {
@@ -123,7 +146,7 @@
             flex-direction: column;
             gap: 6px;
             min-height: 120px;
-            max-height: 220px;
+            max-height: 200px;
             overflow-y: auto;
             margin-top: 8px;
             padding-right: 4px;
@@ -151,6 +174,45 @@
             background-color: #1e293b;
         }
 
+        .sidebar-feedback-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            height: 60px;
+            background-color: #1e293b;
+            color: #ffffff;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 12px;
+            resize: none;
+        }
+
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .feedback-submit-btn {
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .feedback-submit-btn:hover {
+            background-color: #2563eb;
+        }
+
         .sidebar-footer {
             margin-top: auto;
             padding-top: 16px;
@@ -171,7 +233,6 @@
         }
 
         .reset-btn:hover {
-            background-color: #1f2937;
             border-color: #ef4444;
             color: #ef4444;
         }
@@ -180,8 +241,35 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background-color: #0e1117;
+            background-color: var(--bg-color);
             position: relative;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 12px 24px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--btn-border);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: #3b82f6;
         }
 
         .chat-body {
@@ -223,9 +311,9 @@
         }
 
         .bot-bubble {
-            background-color: #1e293b;
-            color: #e2e8f0;
-            border: 1px solid #334155;
+            background-color: var(--chat-bubble-bot);
+            color: var(--text-color);
+            border: 1px solid var(--btn-border);
             border-radius: 18px 18px 18px 4px;
             padding: 16px 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
@@ -245,7 +333,7 @@
         }
 
         .stage-questions-card {
-            background-color: #1a202c;
+            background-color: var(--card-bg);
             border: 1px solid #3b82f6;
             border-radius: 12px;
             padding: 16px;
@@ -269,9 +357,9 @@
         }
 
         .stage-q-btn {
-            background-color: #1e293b;
-            color: #e2e8f0;
-            border: 1px solid #334155;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
+            border: 1px solid var(--btn-border);
             padding: 10px 14px;
             border-radius: 8px;
             text-align: left;
@@ -296,8 +384,8 @@
 
         .action-btn {
             background-color: transparent;
-            border: 1px solid #334155;
-            color: #94a3b8;
+            border: 1px solid var(--btn-border);
+            color: var(--subtext-color);
             padding: 4px 10px;
             border-radius: 6px;
             cursor: pointer;
@@ -309,7 +397,7 @@
         }
 
         .action-btn:hover {
-            background-color: #1e293b;
+            background-color: var(--btn-bg);
             color: #3b82f6;
             border-color: #3b82f6;
         }
@@ -331,6 +419,7 @@
             flex-direction: column;
             gap: 12px;
             width: 100%;
+            margin-top: 12px;
         }
 
         .t1t4-grid {
@@ -341,8 +430,8 @@
         }
 
         .t1t4-card {
-            background-color: #1a202c;
-            border: 1px solid #2d3748;
+            background-color: var(--card-bg);
+            border: 1px solid var(--btn-border);
             border-radius: 12px;
             padding: 14px;
             cursor: pointer;
@@ -353,9 +442,9 @@
         }
 
         .t1t4-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: #3b82f6;
-            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.15);
         }
 
         .t1t4-card.teach { border-top: 3px solid #8b5cf6; }
@@ -363,31 +452,31 @@
         .t1t4-card.treat { border-top: 3px solid #10b981; }
         .t1t4-card.track { border-top: 3px solid #f97316; }
 
-        .t1t4-icon { font-size: 28px; margin-bottom: 3px; }
-        .t1t4-title { font-size: 15px; font-weight: 700; margin: 0; }
+        .t1t4-icon { font-size: 24px; margin-bottom: 2px; }
+        .t1t4-title { font-size: 14px; font-weight: 700; margin: 0; }
         .t1t4-title.teach { color: #8b5cf6; }
         .t1t4-title.test { color: #3b82f6; }
         .t1t4-title.treat { color: #10b981; }
         .t1t4-title.track { color: #f97316; }
-        .t1t4-subtitle { font-size: 12px; font-weight: 600; color: #e2e8f0; margin: 0; }
-        .t1t4-description { font-size: 13px; color: #cbd5e1; line-height: 1.4; flex-grow: 1; margin: 4px 0; }
+        .t1t4-subtitle { font-size: 11px; font-weight: 600; color: var(--text-color); margin: 0; }
+        .t1t4-description { font-size: 12px; color: var(--subtext-color); line-height: 1.4; flex-grow: 1; margin: 2px 0; }
 
         .input-container {
             position: absolute;
             bottom: 0;
             width: 100%;
-            background-color: #0e1117;
+            background-color: var(--bg-color);
             padding: 15px 12%;
             display: flex;
             gap: 8px;
-            border-top: 1px solid #1e293b;
+            border-top: 1px solid var(--border-color);
         }
 
         #user-input {
             flex: 1;
-            background-color: #1e293b;
-            color: #ffffff;
-            border: 1px solid #334155;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            border: 1px solid var(--btn-border);
             border-radius: 8px;
             padding: 12px 16px;
             font-size: 15px;
@@ -401,8 +490,8 @@
 
         .send-btn {
             background-color: transparent;
-            border: 1px solid #334155;
-            color: #64748b;
+            border: 1px solid var(--btn-border);
+            color: var(--subtext-color);
             width: 44px;
             height: 44px;
             border-radius: 8px;
@@ -421,7 +510,7 @@
 
         .stage-badge {
             font-size: 10px;
-            background: #334155;
+            background: #1e293b;
             color: #94a3b8;
             padding: 2px 6px;
             border-radius: 4px;
@@ -466,28 +555,27 @@
             <div class="faq-list" id="faq-list"></div>
         </div>
 
+        <div class="sidebar-section">
+            <p class="section-title">Feedback & Suggestions</p>
+            <div class="sidebar-feedback-box">
+                <textarea id="sidebar-feedback-input" class="feedback-textarea" placeholder="How can we improve your experience?"></textarea>
+                <button class="feedback-submit-btn" onclick="submitGeneralFeedback()">Send Feedback</button>
+            </div>
+        </div>
+
         <div class="sidebar-footer">
             <button class="reset-btn" onclick="resetChat()">🔄 Reset Chat & Stage</button>
         </div>
     </div>
 
     <div class="main-chat">
-        <div class="chat-body" id="chat-body">
-            <div class="message-row bot">
-                <div class="bot-container">
-                    <div class="bot-bubble">
-                        <div class="chat-text">👋 Welcome to myFinergy AI Copilot!
-
-I have FAQs about myFinergy organized across <b>T1 (Teach)</b>, <b>T2 (Test)</b>, <b>T3 (Treat)</b>, and <b>T4 (Track)</b> advisor frameworks.
-
-Select a stage in the sidebar to view questions, or type your query directly below!</div>
-                    </div>
-                    <div class="message-actions">
-                        <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
-                    </div>
-                </div>
-            </div>
+        <div class="chat-header">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle">
+                🌙 Dark Mode
+            </button>
         </div>
+
+        <div class="chat-body" id="chat-body"></div>
 
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Ask any question..." onkeydown="if(event.key==='Enter') processUserQuery()">
@@ -509,7 +597,63 @@ Select a stage in the sidebar to view questions, or type your query directly bel
 
         document.addEventListener("DOMContentLoaded", () => {
             loadStageFaqs(null);
+            renderInitialWelcomeMessage();
         });
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const toggleBtn = document.getElementById('theme-toggle');
+            if (document.body.classList.contains('light-mode')) {
+                toggleBtn.innerText = '☀️ Light Mode';
+            } else {
+                toggleBtn.innerText = '🌙 Dark Mode';
+            }
+        }
+
+        function renderInitialWelcomeMessage() {
+            const chatBody = document.getElementById('chat-body');
+            chatBody.innerHTML = '';
+
+            const botRow = document.createElement('div');
+            botRow.className = 'message-row bot';
+
+            const botContainer = document.createElement('div');
+            botContainer.className = 'bot-container';
+
+            const botBubble = document.createElement('div');
+            botBubble.className = 'bot-bubble';
+
+            const textDiv = document.createElement('div');
+            textDiv.className = 'chat-text';
+            textDiv.innerHTML = `👋 Welcome to myFinergy AI Copilot!\n\nI have FAQs about myFinergy organized across <b>T1 (Teach)</b>, <b>T2 (Test)</b>, <b>T3 (Treat)</b>, and <b>T4 (Track)</b> advisor frameworks.\n\nSelect a framework card below to view its definition, filter by stage in the sidebar, or type your question!`;
+
+            const t1t4Container = document.createElement('div');
+            t1t4Container.className = 't1t4-container';
+
+            const grid = document.createElement('div');
+            grid.className = 't1t4-grid';
+
+            T1T4_FRAMEWORKS.forEach(fw => {
+                const card = document.createElement('div');
+                card.className = `t1t4-card ${fw.color}`;
+                card.onclick = () => handleCardClick(fw.key, fw.title);
+                card.innerHTML = `
+                    <div class="t1t4-icon">${fw.icon}</div>
+                    <h3 class="t1t4-title ${fw.color}">${fw.title}</h3>
+                    <p class="t1t4-subtitle">${fw.subtitle}</p>
+                    <p class="t1t4-description">${fw.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+
+            t1t4Container.appendChild(grid);
+
+            botBubble.appendChild(textDiv);
+            botBubble.appendChild(t1t4Container);
+            botContainer.appendChild(botBubble);
+            botRow.appendChild(botContainer);
+            chatBody.appendChild(botRow);
+        }
 
         async function selectStage(stageKey, btnElement) {
             if (activeStage === stageKey) {
@@ -567,7 +711,7 @@ Select a stage in the sidebar to view questions, or type your query directly bel
         async function loadStageFaqs(stage) {
             const faqList = document.getElementById('faq-list');
             const faqTitle = document.getElementById('faq-section-title');
-            faqList.innerHTML = `<span style="font-size:12px; color:#64748b;">Loading FAQs...</span>`;
+            faqList.innerHTML = `<span style="font-size:12px; color:#94a3b8;">Loading FAQs...</span>`;
             
             faqTitle.innerText = stage ? `${stage} Recommended FAQs` : "Featured FAQs";
 
@@ -581,7 +725,7 @@ Select a stage in the sidebar to view questions, or type your query directly bel
                 const displayFaqs = faqs.slice(0, 8);
 
                 if (displayFaqs.length === 0) {
-                    faqList.innerHTML = `<span style="font-size:12px; color:#64748b;">No FAQs found for ${stage}.</span>`;
+                    faqList.innerHTML = `<span style="font-size:12px; color:#94a3b8;">No FAQs found for ${stage}.</span>`;
                     return;
                 }
 
@@ -598,13 +742,13 @@ Select a stage in the sidebar to view questions, or type your query directly bel
             }
         }
 
-        async function queryBackend(questionText) {
+        async function queryBackend(questionText, stageParam = null) {
             lastUserQuery = questionText;
             try {
                 const response = await fetch(`${API_BASE}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: questionText, stage: activeStage })
+                    body: JSON.stringify({ question: questionText, stage: stageParam || activeStage })
                 });
 
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
@@ -623,41 +767,10 @@ Select a stage in the sidebar to view questions, or type your query directly bel
         }
 
         async function handleCardClick(stageKey, frameworkTitle) {
-            activeStage = stageKey;
-            appendUserMessage(`Tell me about ${frameworkTitle}`);
-            const answer = await queryBackend(`What is ${frameworkTitle}?`);
+            const queryText = stageKey.toLowerCase();
+            appendUserMessage(`Tell me about ${stageKey} - ${frameworkTitle}`);
+            const answer = await queryBackend(queryText, stageKey);
             typeBotMessage(answer);
-        }
-
-        function handleT1T4Framework() {
-            appendUserMessage("📋 T1-T4 Framework Overview");
-            const chatBody = document.getElementById('chat-body');
-            const t1t4Container = document.createElement('div');
-            t1t4Container.className = 't1t4-container';
-
-            const grid = document.createElement('div');
-            grid.className = 't1t4-grid';
-
-            T1T4_FRAMEWORKS.forEach(fw => {
-                const card = document.createElement('div');
-                card.className = `t1t4-card ${fw.color}`;
-                card.onclick = () => handleCardClick(fw.key, fw.title);
-                card.innerHTML = `
-                    <div class="t1t4-icon">${fw.icon}</div>
-                    <h3 class="t1t4-title ${fw.color}">${fw.title}</h3>
-                    <p class="t1t4-subtitle">${fw.subtitle}</p>
-                    <p class="t1t4-description">${fw.description}</p>
-                `;
-                grid.appendChild(card);
-            });
-
-            t1t4Container.appendChild(grid);
-            const messageRow = document.createElement('div');
-            messageRow.className = 'message-row bot';
-            messageRow.appendChild(t1t4Container);
-
-            chatBody.appendChild(messageRow);
-            chatBody.scrollTop = chatBody.scrollHeight;
         }
 
         async function processUserQuery() {
@@ -778,17 +891,32 @@ Select a stage in the sidebar to view questions, or type your query directly bel
             }
         }
 
+        async function submitGeneralFeedback() {
+            const input = document.getElementById('sidebar-feedback-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            try {
+                await fetch(`${API_BASE}/api/feedback`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: "General Sidebar Feedback",
+                        answer: text,
+                        feedback: "general"
+                    })
+                });
+                input.value = '';
+                alert("Thank you for your feedback!");
+            } catch (err) {
+                console.error("Sidebar feedback error:", err);
+            }
+        }
+
         function resetChat() {
             activeStage = null;
             document.querySelectorAll('.sidebar-buttons .st-btn').forEach(btn => btn.classList.remove('active-stage'));
-            document.getElementById('chat-body').innerHTML = `
-                <div class="message-row bot">
-                    <div class="bot-container">
-                        <div class="bot-bubble">
-                            <div class="chat-text">👋 Chat history cleared and stage filter reset. Select a stage or ask any question!</div>
-                        </div>
-                    </div>
-                </div>`;
+            renderInitialWelcomeMessage();
             loadStageFaqs(null);
         }
 
