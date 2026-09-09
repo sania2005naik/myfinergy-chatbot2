@@ -219,13 +219,17 @@ app.add_middleware(
 )
 
 # --- Routes & Endpoints ---
-@app.get("/logo.png")
+@app.api_route("/logo.png", methods=["GET", "HEAD"])
 def get_logo():
     if os.path.exists(LOGO_PATH):
-        return FileResponse(LOGO_PATH, media_type="image/png")
+        return FileResponse(
+            LOGO_PATH,
+            media_type="image/png",
+            headers={"Cache-Control": "public, max-age=3600"},
+        )
     raise HTTPException(status_code=404, detail="Logo not found")
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def read_root():
     return {"message": "MyFinergy Chatbot API is running", "qa_pairs_loaded": len(_qa_pairs)}
 

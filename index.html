@@ -90,9 +90,12 @@
         }
 
         .brand-logo-img {
-            max-height: 38px;
-            width: auto;
+            width: 186px;
+            max-width: 100%;
+            height: auto;
+            max-height: 48px;
             object-fit: contain;
+            display: block;
         }
 
         .logo-badge-fallback {
@@ -608,7 +611,7 @@
         <div class="sidebar-header">
             <!-- Centered Finergy Logo only -->
             <div class="logo-container">
-                <img src="/public/logo.png" alt="Finergy Logo" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-badge').style.display='flex';">
+                <img src="https://myfinergy-backend.onrender.com/logo.png" alt="Finergy Logo" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('fallback-badge').style.display='flex';">
                 <div class="logo-badge-fallback" id="fallback-badge" style="display: none;">mF</div>
             </div>
             <button class="new-chat-btn" onclick="startNewChatSession()">
