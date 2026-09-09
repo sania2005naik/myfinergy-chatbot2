@@ -19,7 +19,6 @@ EMBEDDINGS_CACHE_PATH = os.path.join(BASE_DIR, "qa_embeddings.npy")
 LOGO_PATH = os.path.join(BASE_DIR, "logo.png")
 
 # --- MongoDB Atlas Connection ---
-# Reads MONGO_URI set in Render environment variables
 MONGO_URI = os.getenv("MONGO_URI", "")
 client = MongoClient(MONGO_URI, maxPoolSize=5) if MONGO_URI else None
 db = client["myfinergy_db"] if client else None
