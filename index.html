@@ -300,10 +300,6 @@
             .chat-body { padding: 24px 10% 120px 10%; }
         }
 
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .chat-body { padding: 16px 16px 120px 16px; }
-        }
 
         .message-row {
             display: flex;
@@ -603,9 +599,156 @@
             height: 16px;
             fill: currentColor;
         }
+
+        /* --- Thinking Indicator --- */
+        .thinking-bubble {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .thinking-text {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+        }
+
+        .thinking-dots {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .thinking-dots span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--text-secondary);
+            animation: thinkingPulse 1.2s infinite ease-in-out;
+        }
+
+        .thinking-dots span:nth-child(2) { animation-delay: 0.15s; }
+        .thinking-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes thinkingPulse {
+            0%, 80%, 100% { opacity: 0.35; transform: translateY(0); }
+            40% { opacity: 1; transform: translateY(-3px); }
+        }
+
+        /* --- Suggested Follow-up Questions --- */
+        .suggestions-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .suggestion-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 999px;
+            padding: 7px 11px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .suggestion-btn:hover {
+            border-color: var(--primary-accent);
+            color: var(--primary-accent);
+            background-color: var(--card-hover);
+        }
+
+        /* --- Mobile Sidebar --- */
+        .mobile-menu-btn {
+            display: none;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+        }
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: min(310px, 86vw);
+                height: 100vh;
+                transform: translateX(-100%);
+                transition: transform 0.25s ease;
+                z-index: 1001;
+                box-shadow: 12px 0 30px rgba(0, 0, 0, 0.35);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .sidebar-overlay {
+                display: block;
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.48);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease;
+                z-index: 1000;
+            }
+
+            .sidebar-overlay.active {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .mobile-menu-btn {
+                display: inline-flex !important;
+                visibility: visible;
+                opacity: 1;
+                flex: 0 0 auto;
+            }
+
+            .chat-header {
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 16px;
+                gap: 12px;
+            }
+
+            .theme-toggle-btn {
+                margin-left: auto;
+                flex: 0 0 auto;
+            }
+
+            .chat-body {
+                padding: 16px 16px 120px 16px;
+            }
+
+            .t1t4-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .t1t4-card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
 
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -648,6 +791,7 @@
 
     <main class="main-chat" id="main-chat">
         <header class="chat-header">
+            <button class="mobile-menu-btn" id="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Open menu">☰</button>
             <button class="theme-toggle-btn" onclick="toggleTheme()" id="theme-toggle">
                 🌙 Dark Mode
             </button>
@@ -799,6 +943,7 @@
         }
 
         function loadPastSession(sessionId) {
+            closeMobileSidebar();
             const session = chatSessions.find(s => s.id === sessionId);
             if (!session) return;
 
@@ -824,6 +969,7 @@
         }
 
         function startNewChatSession() {
+            closeMobileSidebar();
             currentSessionId = null;
             isChatActive = false;
 
@@ -848,6 +994,7 @@
         }
 
         function renderT1T4CardsInChat() {
+            closeMobileSidebar();
             transitionToChatView();
             updateCurrentSessionTitle("Framework Overview");
 
@@ -986,22 +1133,61 @@
 
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
                 const data = await response.json();
-                return data.answer || "No answer returned from server.";
+
+                return {
+                    answer: data.answer || "No answer returned from server.",
+                    suggestions: Array.isArray(data.suggestions) ? data.suggestions : []
+                };
             } catch (error) {
                 console.error("API Error:", error);
-                return "⚠️ Unable to reach backend service. Please verify your backend server is running.";
+                return {
+                    answer: "⚠️ Unable to reach backend service. Please verify your backend server is running.",
+                    suggestions: []
+                };
             }
         }
 
+        function showThinkingIndicator() {
+            const chatBody = document.getElementById('chat-body');
+            removeThinkingIndicator();
+
+            const row = document.createElement('div');
+            row.className = 'message-row bot';
+            row.id = 'thinking-indicator';
+            row.innerHTML = `
+                <div class="bot-container">
+                    <div class="bot-bubble">
+                        <div class="thinking-bubble">
+                            <span class="thinking-text">myFinergy is thinking</span>
+                            <span class="thinking-dots">
+                                <span></span><span></span><span></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            chatBody.appendChild(row);
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function removeThinkingIndicator() {
+            const indicator = document.getElementById('thinking-indicator');
+            if (indicator) indicator.remove();
+        }
+
         async function handleFaqClick(questionText) {
+            closeMobileSidebar();
             transitionToChatView();
             updateCurrentSessionTitle(questionText);
 
             appendUserMessageUI(questionText);
             saveMessageToCurrentSession('user', questionText);
 
-            const answer = await queryBackend(questionText);
-            typeBotMessage(answer);
+            showThinkingIndicator();
+            const result = await queryBackend(questionText);
+            removeThinkingIndicator();
+            typeBotMessage(result.answer, questionText, result.suggestions);
         }
 
         async function processUserQuery() {
@@ -1018,8 +1204,10 @@
             textarea.value = '';
             textarea.style.height = 'auto';
 
-            const answer = await queryBackend(text);
-            typeBotMessage(answer);
+            showThinkingIndicator();
+            const result = await queryBackend(text);
+            removeThinkingIndicator();
+            typeBotMessage(result.answer, text, result.suggestions);
         }
 
         function appendUserMessageUI(text) {
@@ -1049,13 +1237,16 @@
             chatBody.scrollTop = chatBody.scrollHeight;
         }
 
-        function typeBotMessage(fullText) {
+        function typeBotMessage(fullText, questionText = "", suggestions = []) {
             const chatBody = document.getElementById('chat-body');
             const botRow = document.createElement('div');
             botRow.className = 'message-row bot';
 
             const botContainer = document.createElement('div');
             botContainer.className = 'bot-container';
+            botContainer.dataset.question = questionText;
+            botContainer.dataset.answer = fullText;
+
             const botBubble = document.createElement('div');
             botBubble.className = 'bot-bubble';
 
@@ -1072,6 +1263,22 @@
                 <button class="action-btn" onclick="toggleReaction(this, 'dislike')">👎</button>
             `;
             botContainer.appendChild(actionsDiv);
+
+            if (Array.isArray(suggestions) && suggestions.length > 0) {
+                const suggestionsWrap = document.createElement('div');
+                suggestionsWrap.className = 'suggestions-wrap';
+
+                suggestions.slice(0, 3).forEach(question => {
+                    const btn = document.createElement('button');
+                    btn.className = 'suggestion-btn';
+                    btn.innerText = question;
+                    btn.onclick = () => handleFaqClick(question);
+                    suggestionsWrap.appendChild(btn);
+                });
+
+                botContainer.appendChild(suggestionsWrap);
+            }
+
             botRow.appendChild(botContainer);
             chatBody.appendChild(botRow);
 
@@ -1089,15 +1296,57 @@
             typeChar();
         }
 
-        function toggleReaction(btnElement, type) {
+        async function toggleReaction(btnElement, type) {
             const parent = btnElement.parentElement;
             const buttons = parent.querySelectorAll('.action-btn');
-            
+
             buttons.forEach(b => {
                 if (b !== parent.children[0]) b.classList.remove('active-reaction');
             });
 
             btnElement.classList.add('active-reaction');
+
+            const botContainer = btnElement.closest('.bot-container');
+            const question = botContainer?.dataset.question || "";
+            const answer = botContainer?.dataset.answer || botContainer?.querySelector('.chat-text')?.innerText || "";
+
+            try {
+                const response = await fetch(`${API_BASE}/api/feedback`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        question: question,
+                        answer: answer,
+                        feedback: type
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Feedback server error: ${response.status}`);
+                }
+
+                btnElement.title = type === 'like'
+                    ? 'Thanks — positive feedback saved.'
+                    : 'Thanks — negative feedback saved.';
+            } catch (error) {
+                console.error("Feedback Error:", error);
+                btnElement.classList.remove('active-reaction');
+                btnElement.title = 'Could not save feedback. Please try again.';
+            }
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar) sidebar.classList.remove('mobile-open');
+            if (overlay) overlay.classList.remove('active');
         }
 
         function copyMessage(btnElement) {
