@@ -594,6 +594,12 @@
             background-color: var(--primary-accent-hover);
         }
 
+        .send-btn-circle:disabled,
+        .chat-textarea:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
         .send-btn-circle svg {
             width: 16px;
             height: 16px;
@@ -833,8 +839,10 @@
 
         let activeStage = null;
         let isChatActive = false;
+        let isRequestPending = false;
 
         // Session-based state management (Copilot / Gemini style)
+        const CHAT_STORAGE_KEY = "myfinergy_chat_sessions_v1";
         let chatSessions = [];
         let currentSessionId = null;
 
@@ -846,6 +854,8 @@
         ];
 
         document.addEventListener("DOMContentLoaded", () => {
+            loadSavedChatSessions();
+            renderPastSearchesList();
             loadStageFaqs(null);
             setDynamicGreeting();
         });
@@ -873,8 +883,74 @@
         function handleKeyDown(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
-                processUserQuery();
+                if (!isRequestPending) processUserQuery();
             }
+        }
+
+        function loadSavedChatSessions() {
+            try {
+                const saved = localStorage.getItem(CHAT_STORAGE_KEY);
+                if (!saved) return;
+
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                    chatSessions = parsed.filter(session =>
+                        session &&
+                        typeof session.id === 'string' &&
+                        Array.isArray(session.messages)
+                    );
+                }
+            } catch (error) {
+                console.warn("Unable to load saved chat sessions:", error);
+                chatSessions = [];
+            }
+        }
+
+        function persistChatSessions() {
+            try {
+                localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(chatSessions));
+            } catch (error) {
+                console.warn("Unable to save chat sessions:", error);
+            }
+        }
+
+        function setRequestPending(pending) {
+            isRequestPending = pending;
+
+            const textarea = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+
+            if (textarea) textarea.disabled = pending;
+            if (sendBtn) sendBtn.disabled = pending;
+        }
+
+        function getConversationHistoryForQuestion(questionText) {
+            const session = chatSessions.find(s => s.id === currentSessionId);
+            if (!session || !Array.isArray(session.messages)) return [];
+
+            // Find the most recent occurrence of this user question and only send
+            // the conversation that came before it. This also makes Regenerate
+            // avoid sending the old answer back as context.
+            let cutoffIndex = session.messages.length;
+            for (let i = session.messages.length - 1; i >= 0; i--) {
+                const msg = session.messages[i];
+                if (
+                    msg.type === 'user' &&
+                    String(msg.content || '').trim() === String(questionText || '').trim()
+                ) {
+                    cutoffIndex = i;
+                    break;
+                }
+            }
+
+            return session.messages
+                .slice(0, cutoffIndex)
+                .filter(msg => !msg.isHtml && (msg.type === 'user' || msg.type === 'bot'))
+                .slice(-8)
+                .map(msg => ({
+                    role: msg.type === 'user' ? 'user' : 'assistant',
+                    content: String(msg.content || '')
+                }));
         }
 
         function transitionToChatView() {
@@ -905,12 +981,14 @@
                 title: 'New Chat',
                 messages: []
             });
+            persistChatSessions();
         }
 
         function updateCurrentSessionTitle(firstPrompt) {
             const session = chatSessions.find(s => s.id === currentSessionId);
             if (session && session.title === 'New Chat') {
                 session.title = firstPrompt.length > 28 ? firstPrompt.substring(0, 28) + '...' : firstPrompt;
+                persistChatSessions();
                 renderPastSearchesList();
             }
         }
@@ -920,6 +998,7 @@
             const session = chatSessions.find(s => s.id === currentSessionId);
             if (session) {
                 session.messages.push({ type, content, isHtml });
+                persistChatSessions();
             }
         }
 
@@ -1128,7 +1207,11 @@
                 const response = await fetch(`${API_BASE}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question: questionText, stage: activeStage })
+                    body: JSON.stringify({
+                        question: questionText,
+                        stage: activeStage,
+                        history: getConversationHistoryForQuestion(questionText)
+                    })
                 });
 
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
@@ -1177,6 +1260,8 @@
         }
 
         async function handleFaqClick(questionText) {
+            if (isRequestPending) return;
+
             closeMobileSidebar();
             transitionToChatView();
             updateCurrentSessionTitle(questionText);
@@ -1184,13 +1269,22 @@
             appendUserMessageUI(questionText);
             saveMessageToCurrentSession('user', questionText);
 
+            setRequestPending(true);
             showThinkingIndicator();
-            const result = await queryBackend(questionText);
-            removeThinkingIndicator();
-            typeBotMessage(result.answer, questionText, result.suggestions);
+
+            try {
+                const result = await queryBackend(questionText);
+                removeThinkingIndicator();
+                typeBotMessage(result.answer, questionText, result.suggestions);
+            } finally {
+                removeThinkingIndicator();
+                setRequestPending(false);
+            }
         }
 
         async function processUserQuery() {
+            if (isRequestPending) return;
+
             const textarea = document.getElementById('user-input');
             const text = textarea.value.trim();
             if (!text) return;
@@ -1204,10 +1298,17 @@
             textarea.value = '';
             textarea.style.height = 'auto';
 
+            setRequestPending(true);
             showThinkingIndicator();
-            const result = await queryBackend(text);
-            removeThinkingIndicator();
-            typeBotMessage(result.answer, text, result.suggestions);
+
+            try {
+                const result = await queryBackend(text);
+                removeThinkingIndicator();
+                typeBotMessage(result.answer, text, result.suggestions);
+            } finally {
+                removeThinkingIndicator();
+                setRequestPending(false);
+            }
         }
 
         function appendUserMessageUI(text) {
@@ -1259,6 +1360,7 @@
             actionsDiv.className = 'message-actions';
             actionsDiv.innerHTML = `
                 <button class="action-btn" onclick="copyMessage(this)">📋 Copy</button>
+                <button class="action-btn" onclick="regenerateAnswer(this)">🔄 Regenerate</button>
                 <button class="action-btn" onclick="toggleReaction(this, 'like')">👍</button>
                 <button class="action-btn" onclick="toggleReaction(this, 'dislike')">👎</button>
             `;
@@ -1296,12 +1398,51 @@
             typeChar();
         }
 
+        async function regenerateAnswer(btnElement) {
+            if (isRequestPending) return;
+
+            const botContainer = btnElement.closest('.bot-container');
+            const botRow = btnElement.closest('.message-row');
+            const questionText = botContainer?.dataset.question || "";
+            if (!questionText) return;
+
+            setRequestPending(true);
+            showThinkingIndicator();
+
+            try {
+                const result = await queryBackend(questionText);
+                removeThinkingIndicator();
+
+                // Remove the old answer from the visible chat.
+                if (botRow) botRow.remove();
+
+                // Remove the most recent stored bot answer that follows this question.
+                const session = chatSessions.find(s => s.id === currentSessionId);
+                if (session && Array.isArray(session.messages)) {
+                    for (let i = session.messages.length - 1; i >= 0; i--) {
+                        if (session.messages[i].type === 'bot' && !session.messages[i].isHtml) {
+                            session.messages.splice(i, 1);
+                            break;
+                        }
+                    }
+                    persistChatSessions();
+                }
+
+                typeBotMessage(result.answer, questionText, result.suggestions);
+            } finally {
+                removeThinkingIndicator();
+                setRequestPending(false);
+            }
+        }
+
         async function toggleReaction(btnElement, type) {
             const parent = btnElement.parentElement;
             const buttons = parent.querySelectorAll('.action-btn');
 
             buttons.forEach(b => {
-                if (b !== parent.children[0]) b.classList.remove('active-reaction');
+                if (b.textContent.includes('👍') || b.textContent.includes('👎')) {
+                    b.classList.remove('active-reaction');
+                }
             });
 
             btnElement.classList.add('active-reaction');

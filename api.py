@@ -2,14 +2,14 @@ import os
 import re
 import json
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from contextlib import asynccontextmanager
 
 import numpy as np
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pymongo import MongoClient
 
 # --- File Paths ---
@@ -55,9 +55,14 @@ FALLBACK_ANSWER = (
 )
 
 # --- Pydantic Models ---
+class ChatHistoryMessage(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
     question: str
     stage: Optional[str] = None
+    history: List[ChatHistoryMessage] = Field(default_factory=list)
 
 class FeedbackRequest(BaseModel):
     question: str
@@ -103,6 +108,93 @@ def _matches_stage(item_stage, target_stage: str) -> bool:
     target_s = str(target_stage).upper().strip()
     return item_s in STAGE_MAPPING.get(target_s, [target_s])
 
+
+def _get_follow_up_suggestions(
+    matched_question: Optional[str],
+    matched_stage: Optional[str],
+    limit: int = 3
+) -> list[str]:
+    if not _qa_pairs:
+        return []
+
+    matched_pair = None
+    if matched_question:
+        for pair in _qa_pairs:
+            if pair.get("question") == matched_question:
+                matched_pair = pair
+                break
+
+    candidates = []
+
+    if matched_pair:
+        subcategory = matched_pair.get("subcategory")
+        category = matched_pair.get("category")
+
+        if subcategory:
+            candidates.extend(
+                pair for pair in _qa_pairs
+                if pair.get("subcategory") == subcategory
+            )
+
+        if category:
+            candidates.extend(
+                pair for pair in _qa_pairs
+                if pair.get("category") == category
+            )
+
+    if matched_stage:
+        candidates.extend(
+            pair for pair in _qa_pairs
+            if _matches_stage(pair.get("stage"), matched_stage)
+        )
+
+    candidates.extend(_qa_pairs)
+
+    suggestions = []
+    seen = set()
+
+    for pair in candidates:
+        question = str(pair.get("question", "")).strip()
+        if not question or question == matched_question or question in seen:
+            continue
+
+        seen.add(question)
+        suggestions.append(question)
+
+        if len(suggestions) >= limit:
+            break
+
+    return suggestions
+
+
+def _build_contextual_query(question: str, history: List[ChatHistoryMessage]) -> Optional[str]:
+    if not history:
+        return None
+
+    normalized = _normalize(question)
+    words = normalized.split()
+
+    # Context is most useful for short follow-ups and pronoun-based questions.
+    context_terms = {
+        "it", "this", "that", "they", "them", "its",
+        "why", "how", "what about", "explain more", "more"
+    }
+
+    needs_context = len(words) <= 8 or any(term in normalized for term in context_terms)
+    if not needs_context:
+        return None
+
+    previous_user = None
+    for item in reversed(history):
+        if item.role.lower() == "user" and item.content.strip():
+            previous_user = item.content.strip()
+            break
+
+    if not previous_user:
+        return None
+
+    return f"{previous_user} {question}"
+
 # --- Database Logging Function ---
 def _log_unanswered(question: str):
     if unanswered_collection is not None:
@@ -115,7 +207,7 @@ def _log_unanswered(question: str):
             print(f"Failed to log unanswered question to MongoDB: {str(e)}")
 
 # --- Core Matching Engine ---
-def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
+def find_answer(user_question: str, stage: Optional[str] = None, log_unanswered: bool = True) -> dict:
     normalized = _normalize(user_question)
 
     if normalized in START_PHRASES:
@@ -182,7 +274,8 @@ def find_answer(user_question: str, stage: Optional[str] = None) -> dict:
         }
 
     # Log unanswered queries to MongoDB Atlas
-    _log_unanswered(user_question)
+    if log_unanswered:
+        _log_unanswered(user_question)
     return {
         "answer": FALLBACK_ANSWER, 
         "matched_question": None,
@@ -247,13 +340,44 @@ def chat_endpoint(request: ChatRequest):
     if not user_query:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
     
-    result = find_answer(user_query, stage=request.stage)
+    # First try the question exactly as the user asked it.
+    result = find_answer(
+        user_query,
+        stage=request.stage,
+        log_unanswered=False,
+    )
+
+    # If it did not match, use recent conversation context for short follow-ups
+    # such as "why?", "what about that?", or "explain more".
+    if result["match_type"] == "none":
+        contextual_query = _build_contextual_query(user_query, request.history)
+        if contextual_query:
+            contextual_result = find_answer(
+                contextual_query,
+                stage=request.stage,
+                log_unanswered=False,
+            )
+            if contextual_result["match_type"] != "none":
+                result = contextual_result
+                result["match_type"] = f"context_{result['match_type']}"
+
+    # Preserve the existing unanswered-question logging behavior exactly once.
+    if result["match_type"] == "none":
+        _log_unanswered(user_query)
+
+    suggestions = _get_follow_up_suggestions(
+        matched_question=result["matched_question"],
+        matched_stage=result["stage"] or request.stage,
+        limit=3,
+    )
+
     return {
         "answer": result["answer"],
         "matched_question": result["matched_question"],
         "stage": result["stage"],
         "confidence": result["score"],
         "match_type": result["match_type"],
+        "suggestions": suggestions,
     }
 
 @app.post("/api/feedback")
